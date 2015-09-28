@@ -2,41 +2,8 @@
  * Created by Illia_Shevchenko on 28.09.2015.
  */
 import React from 'react';
-
-class ACInput extends React.Component {
-    render() {
-        return  <input type = 'text' className = 'form-control' placeholder = {this.props.placeholder}/>;
-    }
-
-    handleKeyDown(event) {
-        console.log('input: ', event.key);
-    }
-}
-
-
-class ACList extends React.Component {
-    render() {
-        let listItemNodes = this.props.list.map((listItem, index) => {
-            return <ACListItem selected = {index === +this.props.selected}
-                               text = {listItem}
-                               key = {index}>
-                   </ACListItem>
-        });
-
-        return  <ul className='dropdown-menu show'>
-                    {listItemNodes}
-                </ul>;
-    }
-}
-
-
-class ACListItem extends React.Component {
-    render() {
-        return  <li className = {this.props.selected ? 'active' : ''}>
-                    <a>{this.props.text}</a>
-                </li>;
-    }
-}
+import ACInput from './auto-complete-input';
+import ACList from './auto-complete-list';
 
 
 class AutoCompleteBox extends React.Component {
