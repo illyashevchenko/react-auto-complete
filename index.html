@@ -3,8 +3,37 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>ReactJS and ES6</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/auto-complete.css"/>
 </head>
 <body>
-<script src="dist/bundle.js"></script>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        <div>
+            <input type="text" class="form-control" placeholder="Start typing..."/>
+            <div class="dropdown-menu">
+                <ul>
+                    <li>Option 1</li>
+                    <li>Option 2</li>
+                    <li>Option 3</li>
+                    <li>Option 4</li>
+                    <li>Option 5</li>
+                    <li>Option 6</li>
+                    <li>Option 7</li>
+                    <li>Option 8</li>
+                    <li>Option 9</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4" id="select"></div>
+</div>
+
+<div id="test"></div>
+<script src="dist/auto-complete.js"></script>
 </body>
 </html>
