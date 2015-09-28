@@ -6,9 +6,9 @@ import React from 'react';
 
 class ACListItem extends React.Component {
     render() {
-        return  <li className = {this.props.selected ? 'active' : ''}>
-            <a>{this.props.text}</a>
-        </li>;
+        return  <li className = {this.props.selected ? 'active' : ''} onClick = {this.props.onClick}>
+                    <a>{this.props.text}</a>
+                </li>;
     }
 }
 

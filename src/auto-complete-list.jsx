@@ -9,14 +9,15 @@ class ACList extends React.Component {
     render() {
         let listItemNodes = this.props.list.map((listItem, index) => {
             return <ACListItem selected = {index === +this.props.selected}
+                               onClick = {this.props.onItemClick.bind(null, listItem)}>
                                text = {listItem}
-                               key = {index}>
+                               key = {index}
             </ACListItem>
         });
 
         return  <ul className='dropdown-menu show'>
-            {listItemNodes}
-        </ul>;
+                    {listItemNodes}
+                </ul>;
     }
 }
 

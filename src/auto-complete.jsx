@@ -23,17 +23,21 @@ class AutoCompleteBox extends React.Component {
 
         return <div className = 'dropdown' onKeyDown = {this.handleKeyDown.bind(this)}>
                     <ACInput placeholder = {this.props.placeholder}></ACInput>
-                    <ACList list = {list} selected = {this.state.selected}></ACList>
+                    <ACList list = {list}
+                            selected = {this.state.selected}
+                            onItemClick = {this.handleItemClick.bind(this)}></ACList>
                 </div>;
     }
 
 
     handleKeyDown(event) {
-        let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter
+        let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter, 08 - backspace
 
         switch (keyCode) {
+            case 13: this.handleSelecting(); break;
             case 38: this.handleListServe(-1); break;
             case 40: this.handleListServe(1); break;
+            default: this.handleFiltering();
         }
     }
 
@@ -44,6 +48,14 @@ class AutoCompleteBox extends React.Component {
         selected = Math.max(selected, 0);
 
         this.setState({ selected: selected });
+    }
+
+    handleFiltering() {
+
+    }
+
+    handleItemClick(itemValue) {
+        console.log(itemValue);
     }
 }
 
