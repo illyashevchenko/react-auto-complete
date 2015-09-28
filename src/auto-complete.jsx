@@ -3,23 +3,82 @@
  */
 import React from 'react';
 
-class AutoCompleteInput extends React.Component {
+class ACInput extends React.Component {
     render() {
-        return <div className='dropdown'>
-                    <input type='text' className='form-control' placeholder='Start typing...'/>
-                    <ul className='dropdown-menu'>
-                        <li><a>Option 1</a></li>
-                        <li><a>Option 2</a></li>
-                        <li><a>Option 3</a></li>
-                        <li><a>Option 4</a></li>
-                        <li><a>Option 5</a></li>
-                        <li><a>Option 6</a></li>
-                        <li><a>Option 7</a></li>
-                        <li><a>Option 8</a></li>
-                        <li><a>Option 9</a></li>
-                    </ul>
-                </div>;
+        return  <input type = 'text' className = 'form-control' placeholder = {this.props.placeholder}/>;
+    }
+
+    handleKeyDown(event) {
+        console.log('input: ', event.key);
     }
 }
 
-export default AutoCompleteInput;
+
+class ACList extends React.Component {
+    render() {
+        let listItemNodes = this.props.list.map((listItem, index) => {
+            return <ACListItem selected = {index === +this.props.selected}
+                               text = {listItem}
+                               key = {index}>
+                   </ACListItem>
+        });
+
+        return  <ul className='dropdown-menu show'>
+                    {listItemNodes}
+                </ul>;
+    }
+}
+
+
+class ACListItem extends React.Component {
+    render() {
+        return  <li className = {this.props.selected ? 'active' : ''}>
+                    <a>{this.props.text}</a>
+                </li>;
+    }
+}
+
+
+class AutoCompleteBox extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            selected: -1
+        };
+    }
+
+
+    render() {
+        let list = this.props.list.map((item) => {
+            return item[this.props.itemKey];
+        });
+
+        return <div className = 'dropdown' onKeyDown = {this.handleKeyDown.bind(this)}>
+                    <ACInput placeholder = {this.props.placeholder}></ACInput>
+                    <ACList list = {list} selected = {this.state.selected}></ACList>
+                </div>;
+    }
+
+
+    handleKeyDown(event) {
+        let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter
+
+        switch (keyCode) {
+            case 38: this.handleListServe(-1); break;
+            case 40: this.handleListServe(1); break;
+        }
+    }
+
+    handleListServe(step) {
+        let selected = this.state.selected + step;
+
+        selected = Math.min(selected, this.props.list.length - 1);
+        selected = Math.max(selected, 0);
+
+        this.setState({ selected: selected });
+    }
+}
+
+
+export default AutoCompleteBox;
