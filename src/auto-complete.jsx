@@ -5,6 +5,9 @@ import React from 'react';
 import ACInput from './auto-complete-input';
 import ACList from './auto-complete-list';
 
+import listStore from './list-store-mock';
+import listAction from './list-action-mock';
+
 
 class AutoCompleteBox extends React.Component {
     constructor(props) {
@@ -34,13 +37,8 @@ class AutoCompleteBox extends React.Component {
     }
 
 
-    getList(filter) {
-        filter = filter.toUpperCase();
-
-        return this.props.list
-            .map((item) => item[this.props.itemKey])
-            .filter((listItem) => listItem && listItem.toUpperCase().includes(filter))
-            .slice(0, this.props.maxItems || undefined);
+    componentDidMount() {
+        listStore.bind();
     }
 
 
@@ -66,9 +64,38 @@ class AutoCompleteBox extends React.Component {
     }
 
 
+    getList(filter) {
+        filter = filter.toUpperCase();
+
+        return this.props.list
+            .map((item) => item[this.props.itemKey])
+            .filter((listItem) => listItem && listItem.toUpperCase().includes(filter))
+            .slice(0, this.props.maxItems || undefined);
+    }
+
+
+    handleFiltering(value) {
+        let list = this.getList(value);
+
+        this.setState({
+            filter  : value,
+            selected: -1,
+            list    : list,
+            showList: list.length && value.length >= this.props.minLetters
+        });
+    }
+
+
     handleComplete() {
         if (this.state.showList && this.state.list[0]) {
             this.handleItemClick(this.state.list[0]);
+        }
+    }
+
+
+    handleSearch() {
+        if (this.state.filter) {
+            this.handleItemClick(this.state.filter);
         }
     }
 
@@ -87,25 +114,6 @@ class AutoCompleteBox extends React.Component {
             selected: selected,
             showList: true
         });
-    }
-
-
-    handleFiltering(value) {
-        let list = this.getList(value);
-
-        this.setState({
-            filter  : value,
-            selected: -1,
-            list    : list,
-            showList: list.length && value.length >= this.props.minLetters
-        });
-    }
-
-
-    handleSearch() {
-        if (this.state.filter) {
-            this.handleItemClick(this.state.filter);
-        }
     }
 
 
