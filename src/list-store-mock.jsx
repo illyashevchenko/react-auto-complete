@@ -31,7 +31,7 @@ export default {
 
     filter: function (query) {
         query = query.toUpperCase();
-        let list = this.list.filter((listItem) => listItem && listItem.toUpperCase().includes(query));
+        let list = this.list.filter((listItem) => listItem.firstName.toUpperCase().includes(query));
 
         setTimeout(() => {
             this.listeners.success.forEach( (callback) => callback(list) );

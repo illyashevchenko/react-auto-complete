@@ -5,6 +5,6 @@
 import listSore from './list-store-mock'
 
 export default {
-    filter: listSore.filter,
+    filter: listSore.filter.bind(listSore),
     select: () => {}
 };

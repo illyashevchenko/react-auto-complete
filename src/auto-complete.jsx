@@ -17,7 +17,9 @@ class AutoCompleteBox extends React.Component {
             selected: -1,
             filter  : '',
             list    : [],
-            showList: false
+            showList: false,
+            loading : false,
+            error   : false
         };
     }
 
@@ -38,7 +40,53 @@ class AutoCompleteBox extends React.Component {
 
 
     componentDidMount() {
-        listStore.bind();
+        this.unbind = listStore.bind(this.handleListChange.bind(this), this.handleListChangeError.bind(this));
+    }
+
+
+    componentWillUnmount() {
+        this.unbind();
+    }
+
+
+    handleListChange(list) {
+        list = this.getList(list);
+
+        this.setState({
+            list    : list,
+            showList: !!list.length
+        })
+    }
+
+
+    handleListChangeError() {
+        this.setState({
+            error  : true,
+            loading: false
+        })
+    }
+
+
+    getList(list) {
+        return list
+            .map((item) => item[this.props.itemKey])
+            .slice(0, this.props.maxItems || undefined);
+    }
+
+
+    handleFiltering(value) {
+        let needLoading = value.length >= this.props.minLetters;
+
+        this.setState({
+            filter  : value,
+            selected: -1,
+            loading : needLoading,
+            showList: false
+        });
+
+        if (needLoading) {
+            listAction.filter(value);
+        }
     }
 
 
@@ -48,54 +96,18 @@ class AutoCompleteBox extends React.Component {
         switch (keyCode) {
             case 13:
                 this.handleEnter();
-            break;
+                break;
             case 38:
                 this.handleListServe(-1);
                 event.preventDefault(); //prevent default <input> behaviour for up/down button presses
-            break;
+                break;
             case 40:
                 this.handleListServe(1);
                 event.preventDefault();
-            break;
+                break;
             case 39:
                 this.handleComplete();
-            break;
-        }
-    }
-
-
-    getList(filter) {
-        filter = filter.toUpperCase();
-
-        return this.props.list
-            .map((item) => item[this.props.itemKey])
-            .filter((listItem) => listItem && listItem.toUpperCase().includes(filter))
-            .slice(0, this.props.maxItems || undefined);
-    }
-
-
-    handleFiltering(value) {
-        let list = this.getList(value);
-
-        this.setState({
-            filter  : value,
-            selected: -1,
-            list    : list,
-            showList: list.length && value.length >= this.props.minLetters
-        });
-    }
-
-
-    handleComplete() {
-        if (this.state.showList && this.state.list[0]) {
-            this.handleItemClick(this.state.list[0]);
-        }
-    }
-
-
-    handleSearch() {
-        if (this.state.filter) {
-            this.handleItemClick(this.state.filter);
+                break;
         }
     }
 
@@ -117,9 +129,26 @@ class AutoCompleteBox extends React.Component {
     }
 
 
+    handleSearch() {
+        if (this.state.filter) {
+            this.handleItemClick(this.state.filter);
+        }
+    }
+
+
+    handleComplete() {
+        if (this.state.showList && this.state.list[0]) {
+            this.handleItemClick(this.state.list[0]);
+        }
+    }
+
+
     handleEnter() {
-        let item = this.state.showList && this.state.list[this.state.selected]; //if the list is shown
-        this.handleItemClick(item || this.state.filter);
+        let item = this.state.list[this.state.selected]; //if the list is shown
+
+        if (this.state.showList && item) {
+            this.handleItemClick(item);
+        }
     }
 
 
@@ -129,8 +158,6 @@ class AutoCompleteBox extends React.Component {
             selected: -1,
             showList: false
         });
-
-        this.props.onSelect(itemValue);
     }
 }
 
