@@ -23,6 +23,7 @@ class AutoCompleteBox extends React.Component {
         return <div className = 'dropdown' onKeyDown = {this.handleKeyDown.bind(this)}>
                     <ACInput placeholder = {this.props.placeholder}
                              onFilter = {this.handleFiltering.bind(this)}
+                             onSearch = {this.handleSearch.bind(this)}
                              value = {this.state.list[this.state.selected] || this.state.filter} />
 
                     <ACList onItemClick = {this.handleItemClick.bind(this)}
@@ -100,6 +101,10 @@ class AutoCompleteBox extends React.Component {
         });
     }
 
+
+    handleSearch() {
+        this.handleItemClick(this.state.filter);
+    }
 
     handleEnter() {
         let item = this.state.showList && this.state.list[this.state.selected]; //if the list is shown
