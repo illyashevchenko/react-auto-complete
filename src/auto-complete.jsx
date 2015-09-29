@@ -23,7 +23,7 @@ class AutoCompleteBox extends React.Component {
         return <div className = 'dropdown' onKeyDown = {this.handleKeyDown.bind(this)}>
                     <ACInput placeholder = {this.props.placeholder}
                              onFilter = {this.handleFiltering.bind(this)}
-                             text = {this.state.list[this.state.selected] || this.state.filter} />
+                             value = {this.state.list[this.state.selected] || this.state.filter} />
 
                     <ACList onItemClick = {this.handleItemClick.bind(this)}
                             selected = {this.state.selected}

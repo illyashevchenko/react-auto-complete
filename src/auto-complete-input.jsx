@@ -6,12 +6,11 @@ import React from 'react';
 
 class ACInput extends React.Component {
     render() {
-        let {onFilter, text, ...props} = this.props;
+        let {onFilter, ...props} = this.props;
 
         return  <input className = 'form-control'
                        type = 'text'
                        ref  = 'input'
-                       value = {text}
                        onChange = {this.handleInput.bind(this)}
                        {...props} />;
     }
