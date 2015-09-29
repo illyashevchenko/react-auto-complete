@@ -217,7 +217,7 @@ let list = [
 
 
 React.render(
-    <AutoCompleteBox list = {list} itemKey = 'firstName' onSelect = {onSelect} minLetters = {2} placeholder = 'Start typing...'/>,
+    <AutoCompleteBox list = {list} itemKey = 'firstName' onSelect = {onSelect} minLetters = {2} maxItems = {0} placeholder = 'Start typing...'/>,
     document.getElementById('select')
 );
 

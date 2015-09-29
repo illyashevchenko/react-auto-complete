@@ -38,7 +38,8 @@ class AutoCompleteBox extends React.Component {
 
         return this.props.list
             .map((item) => item[this.props.itemKey])
-            .filter((listItem) => listItem && listItem.toUpperCase().includes(filter));
+            .filter((listItem) => listItem && listItem.toUpperCase().includes(filter))
+            .slice(0, this.props.maxItems || undefined);
     }
 
 
