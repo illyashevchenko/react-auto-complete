@@ -103,8 +103,11 @@ class AutoCompleteBox extends React.Component {
 
 
     handleSearch() {
-        this.handleItemClick(this.state.filter);
+        if (this.state.filter) {
+            this.handleItemClick(this.state.filter);
+        }
     }
+
 
     handleEnter() {
         let item = this.state.showList && this.state.list[this.state.selected]; //if the list is shown
