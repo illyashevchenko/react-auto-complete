@@ -46,11 +46,30 @@ class AutoCompleteBox extends React.Component {
         let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter
 
         switch (keyCode) {
-            case 13: this.handleEnter(); break;
-            case 38: this.handleListServe(-1); break;
-            case 40: this.handleListServe(1); break;
+            case 13:
+                this.handleEnter();
+            break;
+            case 38:
+                this.handleListServe(-1);
+                event.preventDefault(); //prevent default <input> behaviour for up/down button presses
+            break;
+            case 40:
+                this.handleListServe(1);
+                event.preventDefault();
+            break;
+            case 39:
+                this.handleComplete();
+            break;
         }
     }
+
+
+    handleComplete() {
+        if (this.state.showList && this.state.list[0]) {
+            this.handleItemClick(this.state.list[0]);
+        }
+    }
+
 
     handleListServe(step) {
         if (!this.state.list.length) {
