@@ -5,8 +5,34 @@ import React from 'react';
 
 
 class ACInput extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: ''
+        };
+    }
+
     render() {
-        return  <input type = 'text' className = 'form-control' placeholder = {this.props.placeholder}/>;
+        let {onFilter, text, ...props} = this.props;
+
+        console.log('Input filter is: ', text);
+        return  <input className = 'form-control'
+                       type = 'text'
+                       ref  = 'input'
+                       value = {text || this.state.value}
+                       onChange = {this.handleInput.bind(this)}
+                       {...props} />;
+    }
+
+
+    handleInput(event) {
+        let value = event.target.value;
+
+        this.props.onFilter(value);
+        this.setState({
+            value: value
+        });
     }
 }
 

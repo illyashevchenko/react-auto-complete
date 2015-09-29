@@ -11,23 +11,35 @@ class AutoCompleteBox extends React.Component {
         super(props);
 
         this.state = {
-            selected: -1
+            selected: -1,
+            filter  : ''
         };
     }
 
 
     render() {
-        let list = this.props.list.map((item) => {
-            return item[this.props.itemKey];
-        });
+        this.setList();
 
         return <div className = 'dropdown' onKeyDown = {this.handleKeyDown.bind(this)}>
-                    <ACInput placeholder = {this.props.placeholder}></ACInput>
-                    <ACList onItemClick = {this.handleItemClick.bind(this)}
-                            selected = {this.state.selected}
-                            list = {list}>
-                    </ACList>
-                </div>;
+            <ACInput placeholder = {this.props.placeholder}
+                     onFilter = {this.handleFiltering.bind(this)}
+                     text = {this._list[this.state.selected]} />
+
+            <ACList onItemClick = {this.handleItemClick.bind(this)}
+                    selected = {this.state.selected}
+                    list = {this._list} />
+        </div>;
+    }
+
+
+    setList() {
+        console.log('set list');
+
+        let filter = this.state.filter.toUpperCase();
+
+        this._list = this.props.list
+            .map((item) => item[this.props.itemKey])
+            .filter((listItem) => listItem && listItem.toUpperCase().includes(filter));
     }
 
 
@@ -35,28 +47,42 @@ class AutoCompleteBox extends React.Component {
         let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter, 08 - backspace
 
         switch (keyCode) {
-            case 13: this.handleSelecting(); break;
+            case 13: this.handleEnter(); break;
             case 38: this.handleListServe(-1); break;
             case 40: this.handleListServe(1); break;
-            default: this.handleFiltering();
         }
     }
 
     handleListServe(step) {
+        console.log(this._list.length);
+
         let selected = this.state.selected + step;
 
-        selected = Math.min(selected, this.props.list.length - 1);
+        selected = Math.min(selected, this._list.length - 1);
         selected = Math.max(selected, 0);
 
-        this.setState({ selected: selected });
+        this.setState({
+            selected: selected
+        });
     }
 
-    handleFiltering() {
 
+    handleFiltering(value) {
+        console.log('Filter string is: ', value);
+
+        this.setState({
+            filter: value
+        })
     }
+
+
+    handleEnter() {
+        console.log('Pressed enter on item: ', this.state.filter);
+    }
+
 
     handleItemClick(itemValue) {
-        console.log(itemValue);
+        console.log('clicked item is: ' , itemValue);
     }
 }
 

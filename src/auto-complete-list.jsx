@@ -11,8 +11,7 @@ class ACList extends React.Component {
             return <ACListItem selected = {index === +this.props.selected}
                                onClick = {this.props.onItemClick.bind(null, listItem)}
                                text = {listItem}
-                               key = {index}>
-            </ACListItem>
+                               key = {index} />
         });
 
         return  <ul className='dropdown-menu show'>
