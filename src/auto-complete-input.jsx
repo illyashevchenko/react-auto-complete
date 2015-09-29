@@ -7,23 +7,23 @@ import ACInputButton from './auto-complete-input-button';
 
 class ACInput extends React.Component {
     render() {
-        let {onFilter, onSearch, ...props} = this.props;
+        let {onChange, onSearch, ...props} = this.props;
 
         return <div className = 'input-group'>
                     <input className = 'form-control'
                            type = 'text'
                            ref  = 'input'
-                           onChange = {this.handleInput.bind(this)}
-                        {...props} />
+                           onChange = {this.handleChange.bind(this)}
+                           {...props} />
                     <ACInputButton type = 'search' onClick = {onSearch} />
-                    <ACInputButton type = 'remove' onClick = {onFilter.bind(null, '')} />
+                    <ACInputButton type = 'remove' onClick = {onChange.bind(null, '')} />
                 </div>;
     }
 
 
-    handleInput(event) {
+    handleChange(event) {
         let value = event.target.value;
-        this.props.onFilter(value);
+        this.props.onChange(value);
     }
 }
 

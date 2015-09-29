@@ -19,7 +19,11 @@ listAction.select = (string) => {
 
 
 React.render(
-    <AutoCompleteBox itemKey = 'firstName' minLetters = {2} maxItems = {0} placeholder = 'Start typing...'/>,
+    <AutoCompleteBox itemKey = 'firstName'
+                     minLetters = {2}
+                     maxItems = {0}
+                     placeholder = 'Start typing...'
+                     error = 'Sorry, could not find anything'/>,
     document.getElementById('select')
 );
 
