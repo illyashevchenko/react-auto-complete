@@ -183,6 +183,24 @@ let list = [
             "index": 18
         },
         {
+            "registered": "Wednesday, March 18, 2015 3:10 AM",
+            "firstName": "Finle",
+            "name": {
+                "last": "Shepherd",
+                "firstName": "Pat"
+            },
+            "index": 18
+        },
+        {
+            "registered": "Wednesday, March 18, 2015 3:10 AM",
+            "firstName": "Finl",
+            "name": {
+                "last": "Shepherd",
+                "firstName": "Pat"
+            },
+            "index": 18
+        },
+        {
             "registered": "Tuesday, June 10, 2014 7:04 AM",
             "firstName": "Alisha",
             "name": {
@@ -193,13 +211,13 @@ let list = [
         }
     ],
 
-    onSelect = (item) => {
-        document.getElementById('result').textContent = `Selected item first name is ${item.firstName}`;
+    onSelect = (string) => {
+        document.getElementById('result').textContent = `Selected item first name is ${string}`;
     };
 
 
 React.render(
-    <AutoCompleteBox list = {list} itemKey = 'firstName' onSelect = {onSelect} placeholder='Start typing...'/>,
+    <AutoCompleteBox list = {list} itemKey = 'firstName' onSelect = {onSelect} minLetters = {2} placeholder = 'Start typing...'/>,
     document.getElementById('select')
 );
 

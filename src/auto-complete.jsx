@@ -12,39 +12,38 @@ class AutoCompleteBox extends React.Component {
 
         this.state = {
             selected: -1,
-            filter  : ''
+            filter  : '',
+            list    : [],
+            showList: false
         };
     }
 
 
     render() {
-        this.setList();
-
         return <div className = 'dropdown' onKeyDown = {this.handleKeyDown.bind(this)}>
-            <ACInput placeholder = {this.props.placeholder}
-                     onFilter = {this.handleFiltering.bind(this)}
-                     text = {this._list[this.state.selected]} />
+                    <ACInput placeholder = {this.props.placeholder}
+                             onFilter = {this.handleFiltering.bind(this)}
+                             text = {this.state.list[this.state.selected] || this.state.filter} />
 
-            <ACList onItemClick = {this.handleItemClick.bind(this)}
-                    selected = {this.state.selected}
-                    list = {this._list} />
-        </div>;
+                    <ACList onItemClick = {this.handleItemClick.bind(this)}
+                            selected = {this.state.selected}
+                            list = {this.state.list}
+                            show = {this.state.showList}/>
+                </div>;
     }
 
 
-    setList() {
-        console.log('set list');
+    getList(filter) {
+        filter = filter.toUpperCase();
 
-        let filter = this.state.filter.toUpperCase();
-
-        this._list = this.props.list
+        return this.props.list
             .map((item) => item[this.props.itemKey])
             .filter((listItem) => listItem && listItem.toUpperCase().includes(filter));
     }
 
 
     handleKeyDown(event) {
-        let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter, 08 - backspace
+        let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter
 
         switch (keyCode) {
             case 13: this.handleEnter(); break;
@@ -54,35 +53,48 @@ class AutoCompleteBox extends React.Component {
     }
 
     handleListServe(step) {
-        console.log(this._list.length);
+        if (!this.state.list.length) {
+            return;
+        }
 
         let selected = this.state.selected + step;
 
-        selected = Math.min(selected, this._list.length - 1);
+        selected = Math.min(selected, this.state.list.length - 1);
         selected = Math.max(selected, 0);
 
         this.setState({
-            selected: selected
+            selected: selected,
+            showList: true
         });
     }
 
 
     handleFiltering(value) {
-        console.log('Filter string is: ', value);
+        let list = this.getList(value);
 
         this.setState({
-            filter: value
-        })
+            filter  : value,
+            selected: -1,
+            list    : list,
+            showList: list.length && value.length >= this.props.minLetters
+        });
     }
 
 
     handleEnter() {
-        console.log('Pressed enter on item: ', this.state.filter);
+        let item = this.state.showList && this.state.list[this.state.selected]; //if the list is shown
+        this.handleItemClick(item || this.state.filter);
     }
 
 
     handleItemClick(itemValue) {
-        console.log('clicked item is: ' , itemValue);
+        this.setState({
+            filter  : itemValue,
+            selected: -1,
+            showList: false
+        });
+
+        this.props.onSelect(itemValue);
     }
 }
 

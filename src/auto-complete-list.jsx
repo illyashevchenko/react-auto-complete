@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import ACListItem from './auto-complete-list-item';
+import classNames from 'classnames';
 
 
 class ACList extends React.Component {
@@ -12,9 +13,12 @@ class ACList extends React.Component {
                                onClick = {this.props.onItemClick.bind(null, listItem)}
                                text = {listItem}
                                key = {index} />
-        });
+        }),
+            className = classNames('dropdown-menu', {
+                show: this.props.show
+            });
 
-        return  <ul className='dropdown-menu show'>
+        return  <ul className = {className}>
                     {listItemNodes}
                 </ul>;
     }
