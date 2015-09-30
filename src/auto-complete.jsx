@@ -27,7 +27,6 @@ class AutoCompleteBox extends React.Component {
     render() {
         return <div className = 'dropdown' onKeyDown = {this.handleKeyDown.bind(this)}>
                     <ACInput placeholder = {this.props.placeholder}
-                             initValue = {this.state.list[this.state.selected] || this.state.filter}
                              debounce = {this.props.debounce}
                              loading  = {this.state.loading}
                              onChange = {this.handleFiltering.bind(this)}

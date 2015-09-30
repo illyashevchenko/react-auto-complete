@@ -11,10 +11,10 @@ class ACInput extends React.Component {
         super(props);
 
         this.state = {
-            value: this.props.initValue
+            value: ''
         };
 
-        this.handleSearch = _.debounce(this.handleSearch.bind(this), this.props.debounce);
+        this.handleSearch = _.debounce(this.handleSearch.bind(this), props.debounce);
     }
 
 
@@ -38,7 +38,7 @@ class ACInput extends React.Component {
     }
 
 
-    handleSearch(){
+    handleSearch() {
         this.props.onChange(this.state.value);
     }
 

@@ -6,10 +6,11 @@ import classNames from 'classnames';
 
 class ACInputButton extends React.Component {
     render() {
-        let {onClick = () => {}, className, show} = this.props,
-            containerClassName = classNames('input-group-btn', {
-                hide: typeof show === 'boolean' && !show
-            });
+        let {onClick = () => {}, className, show} = this.props;
+
+        let containerClassName = classNames('input-group-btn', { //use the second let, because IDE resists to catch syntax when one using one let
+            hide: typeof show === 'boolean' && !show
+        });
 
         return <span className = {containerClassName} onClick = {onClick}>
                    <button className = 'btn btn-default' type = 'button'>
