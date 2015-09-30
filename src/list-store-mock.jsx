@@ -29,13 +29,14 @@ export default {
     },
 
 
-    filter: function (query) {
+    filter: function ({query, start, count}) {
         query = query.toUpperCase();
 
         setTimeout(() => {
             let list = this.list
                 .map((item) => item.firstName)
-                .filter((listItem) => listItem.toUpperCase().includes(query));
+                .filter((listItem) => listItem.toUpperCase().includes(query))
+                .slice(start, start + count);
 
             this.listeners.success.forEach((callback) => callback(list));
         }, 1000);

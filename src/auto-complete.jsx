@@ -51,7 +51,7 @@ class AutoCompleteBox extends React.Component {
 
 
     handleListChange(list) {
-        list = list.slice(0, this.props.maxItems || undefined);
+        list = this.state.list.concat(list);
 
         this.setState({
             list    : list,
@@ -74,13 +74,18 @@ class AutoCompleteBox extends React.Component {
 
         this.setState({
             filter  : value,
+            list    : [],
             selected: -1,
             loading : needLoading,
             showList: false
         });
 
         if (needLoading) {
-            listAction.filter(value);
+            listAction.filter({
+                query: value,
+                start: 0,
+                count: this.props.itemsCount
+            });
         }
     }
 
@@ -151,6 +156,7 @@ class AutoCompleteBox extends React.Component {
         this.setState({
             filter  : itemValue,
             selected: -1,
+            list    : [],
             showList: false
         });
     }

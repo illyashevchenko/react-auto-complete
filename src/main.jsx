@@ -20,7 +20,7 @@ listAction.select = (string) => {
 
 React.render(
     <AutoCompleteBox minLetters = {2}
-                     maxItems = {0}
+                     itemsCount = {3}
                      debounce = {2000}
                      placeholder = 'Start typing...'
                      error = 'Sorry, could not find anything'/>,
