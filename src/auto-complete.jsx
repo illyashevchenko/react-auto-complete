@@ -50,7 +50,7 @@ class AutoCompleteBox extends React.Component {
 
 
     handleListChange(list) {
-        list = this.getList(list);
+        list = list.slice(0, this.props.maxItems || undefined);
 
         this.setState({
             list    : list,
@@ -64,13 +64,6 @@ class AutoCompleteBox extends React.Component {
             error  : true,
             loading: false
         })
-    }
-
-
-    getList(list) {
-        return list
-            .map((item) => item[this.props.itemKey])
-            .slice(0, this.props.maxItems || undefined);
     }
 
 
