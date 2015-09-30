@@ -21,7 +21,7 @@ listAction.select = (string) => {
 React.render(
     <AutoCompleteBox minLetters = {2}
                      maxItems = {0}
-                     debounce = {1000}
+                     debounce = {2000}
                      placeholder = 'Start typing...'
                      error = 'Sorry, could not find anything'/>,
     document.getElementById('select')

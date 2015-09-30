@@ -27,9 +27,11 @@ class AutoCompleteBox extends React.Component {
     render() {
         return <div className = 'dropdown' onKeyDown = {this.handleKeyDown.bind(this)}>
                     <ACInput placeholder = {this.props.placeholder}
+                             initValue = {this.state.list[this.state.selected] || this.state.filter}
+                             debounce = {this.props.debounce}
+                             loading  = {this.state.loading}
                              onChange = {this.handleFiltering.bind(this)}
-                             onSearch = {this.handleSearch.bind(this)}
-                             value = {this.state.list[this.state.selected] || this.state.filter} />
+                             onSearch = {this.handleSearch.bind(this)} />
 
                     <ACList onItemClick = {this.handleItemClick.bind(this)}
                             selected = {this.state.selected}
@@ -54,7 +56,8 @@ class AutoCompleteBox extends React.Component {
 
         this.setState({
             list    : list,
-            showList: !!list.length
+            showList: !!list.length,
+            loading : false
         })
     }
 
