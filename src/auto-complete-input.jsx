@@ -14,23 +14,24 @@ class ACInput extends React.Component {
             value: ''
         };
 
-        this.handleSearch = _.debounce(this.handleSearch.bind(this), props.debounce);
+        this.handleSearchDebounce = _.debounce(this.handleSearch.bind(this), props.debounce);
     }
 
 
     render() {
-        let {onSearch, onChange, placeholder, loading} = this.props;
+        let {onChange, placeholder, loading} = this.props;
 
         return <div className = 'input-group'>
                     <input placeholder = {placeholder}
                            className   = 'form-control'
                            onChange    = {this.handleChange.bind(this)}
+                           onKeyDown   = {this.handleKeyDown.bind(this)}
                            value       = {this.state.value}
                            type        = 'text' />
                     <ACInputButton className = 'glyphicon loader'
                                    show = {loading} />
                     <ACInputButton className = 'glyphicon glyphicon-search'
-                                   onClick = {onSearch}
+                                   onClick = {this.handleSearch.bind(this)}
                                    show = {!loading} />
                     <ACInputButton className = 'glyphicon glyphicon-remove'
                                    onClick = {onChange.bind(null, '')} />
@@ -57,7 +58,15 @@ class ACInput extends React.Component {
             value: event.target.value
         });
 
-        this.handleSearch();
+        this.handleSearchDebounce();
+    }
+
+    handleKeyDown(event) {
+        let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter
+
+        if (keyCode === 13 && this.props.value !== this.state.value) {
+            this.handleSearch();
+        }
     }
 }
 

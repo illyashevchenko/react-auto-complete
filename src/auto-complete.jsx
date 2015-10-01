@@ -29,8 +29,7 @@ class AutoCompleteBox extends React.Component {
                              debounce = {this.props.debounce}
                              loading  = {this.state.loading}
                              value    = {this.state.filter}
-                             onChange = {this.handleFiltering.bind(this)}
-                             onSearch = {this.handleSearch.bind(this)} />
+                             onChange = {this.handleFiltering.bind(this)} />
 
                     <ACList onItemClick = {this.handleItemClick.bind(this)}
                             itemsCount  = {this.props.itemsCount}
@@ -126,22 +125,19 @@ class AutoCompleteBox extends React.Component {
 
 
     handleFiltering(value) {
+        if (value === this.state.filter) {
+            return;
+        }
+
         this.setState({
             filter  : value,
             list    : [],
             selected: -1
+        }, () => {
+            if (value.length >= this.props.minLetters) {
+                this.queryList();
+            }
         });
-
-        if (value.length >= this.props.minLetters) {
-            this.queryList();
-        }
-    }
-
-
-    handleSearch() {
-        if (this.state.filter) {
-            this.handleItemClick(this.state.filter);
-        }
     }
 
 
@@ -153,10 +149,15 @@ class AutoCompleteBox extends React.Component {
 
 
     handleEnter() {
+        /**
+         * Pressing enter can perform two actions - start filtering (inside ACInput component) and accepting selection in the list
+         * If start filtering was accepted inside the ACInput it would clear this.state.list so item here would be undefined
+         * And so everything will work properly
+         */
         let item = this.state.list[this.state.selected]; //if the list is shown
 
-        if (this.state.list.length && item) {
-            this.handleItemClick(item);
+        if (item) {
+            return this.handleItemClick(item);
         }
     }
 
