@@ -17,7 +17,6 @@ class AutoCompleteBox extends React.Component {
             selected: -1,
             filter  : '',
             list    : [],
-            showList: false,
             loading : false,
             error   : false
         };
@@ -34,10 +33,9 @@ class AutoCompleteBox extends React.Component {
                              onSearch = {this.handleSearch.bind(this)} />
 
                     <ACList onItemClick = {this.handleItemClick.bind(this)}
-                            itemsCount = {this.props.itemsCount}
-                            selected = {this.state.selected}
-                            list = {this.state.list}
-                            show = {this.state.showList}/>
+                            itemsCount  = {this.props.itemsCount}
+                            selected    = {this.state.selected}
+                            list        = {this.state.list} />
                 </div>;
     }
 
@@ -56,9 +54,8 @@ class AutoCompleteBox extends React.Component {
         list = this.state.list.concat(list);
 
         this.setState({
-            list    : list,
-            showList: !!list.length,
-            loading : false
+            list   : list,
+            loading: false
         })
     }
 
@@ -107,14 +104,15 @@ class AutoCompleteBox extends React.Component {
 
 
     handleListServe(step) {
-        if (!this.state.showList) {
+        if (!this.state.list.length) {
             return;
         }
 
-        let selected = this.state.selected + step,
-            loadPosition = this.state.list.length - this.props.itemsCount / 2; //TODO: this formula may be changed
+        let loadPosition = this.state.list.length - this.props.itemsCount / 2, //TODO: this formula may be changed
+            selected     = this.state.selected + step;
 
-        selected = Math.max(selected, 0);
+
+        selected = Math.max(selected, -1);
         selected = Math.min(selected, this.state.list.length - 1);
 
         if (selected > loadPosition) {
@@ -122,8 +120,7 @@ class AutoCompleteBox extends React.Component {
         }
 
         this.setState({
-            selected: selected,
-            showList: true
+            selected: selected
         });
     }
 
@@ -132,8 +129,7 @@ class AutoCompleteBox extends React.Component {
         this.setState({
             filter  : value,
             list    : [],
-            selected: -1,
-            showList: false
+            selected: -1
         });
 
         if (value.length >= this.props.minLetters) {
@@ -150,7 +146,7 @@ class AutoCompleteBox extends React.Component {
 
 
     handleAutoComplete() {
-        if (this.state.showList && this.state.list[0]) {
+        if (this.state.list[0]) {
             this.handleItemClick(this.state.list[0]);
         }
     }
@@ -159,7 +155,7 @@ class AutoCompleteBox extends React.Component {
     handleEnter() {
         let item = this.state.list[this.state.selected]; //if the list is shown
 
-        if (this.state.showList && item) {
+        if (this.state.list.length && item) {
             this.handleItemClick(item);
         }
     }
@@ -169,8 +165,7 @@ class AutoCompleteBox extends React.Component {
         this.setState({
             filter  : itemValue,
             selected: -1,
-            list    : [],
-            showList: false
+            list    : []
         });
     }
 }

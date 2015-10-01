@@ -16,7 +16,7 @@ class ACList extends React.Component {
                                    ref  = {`item${index}`} />
             }),
             className = classNames('dropdown-menu scrollable-menu', {
-                show: this.props.show
+                show: this.props.list.length
             });
 
         return  <ul className = {className}>
@@ -36,7 +36,7 @@ class ACList extends React.Component {
 
 
     setHeight () {
-        if (!this.props.show || !this.refs.item0) {
+        if (!this.props.list.length || !this.refs.item0) {
             return;
         }
 
@@ -52,7 +52,7 @@ class ACList extends React.Component {
 
 
     scrollList() {
-        if (!this.props.show || this.props.selected < 0) {
+        if (!this.props.list.length || this.props.selected < 0) {
             return;
         }
 
