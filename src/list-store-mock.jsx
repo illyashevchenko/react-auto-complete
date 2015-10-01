@@ -30,6 +30,7 @@ export default {
 
 
     filter: function ({query, start, count}) {
+        console.log('Query list: ', query, start, count);
         query = query.toUpperCase();
 
         setTimeout(() => {

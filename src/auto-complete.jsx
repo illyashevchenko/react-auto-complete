@@ -71,23 +71,29 @@ class AutoCompleteBox extends React.Component {
 
 
     handleFiltering(value) {
-        let needLoading = value.length >= this.props.minLetters;
-
         this.setState({
             filter  : value,
             list    : [],
             selected: -1,
-            loading : needLoading,
             showList: false
         });
 
-        if (needLoading) {
-            listAction.filter({
-                query: value,
-                start: 0,
-                count: this.props.itemsCount
-            });
+        if (value.length >= this.props.minLetters) {
+            this.queryList();
         }
+    }
+
+
+    queryList() {
+        this.setState({
+            loading : true
+        });
+
+        listAction.filter({
+            query: this.state.filter,
+            start: this.state.list.length,
+            count: this.props.itemsCount
+        });
     }
 
 
@@ -118,10 +124,14 @@ class AutoCompleteBox extends React.Component {
             return;
         }
 
-        let selected = this.state.selected + step;
+        let selected = this.state.selected + step,
+            loadPosition = this.state.list.length - this.props.itemsCount / 2; //TODO: this formula may be changed
 
-        selected = Math.min(selected, this.state.list.length - 1);
         selected = Math.max(selected, 0);
+
+        if (selected > loadPosition) {
+            this.queryList();
+        }
 
         this.setState({
             selected: selected,
