@@ -61,6 +61,7 @@ class ACInput extends React.Component {
         this.handleSearchDebounce();
     }
 
+
     handleKeyDown(event) {
         let keyCode = event.keyCode || event.which;
 
