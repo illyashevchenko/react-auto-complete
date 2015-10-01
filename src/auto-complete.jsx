@@ -128,6 +128,7 @@ class AutoCompleteBox extends React.Component {
             loadPosition = this.state.list.length - this.props.itemsCount / 2; //TODO: this formula may be changed
 
         selected = Math.max(selected, 0);
+        selected = Math.min(selected, this.state.list.length - 1);
 
         if (selected > loadPosition) {
             this.queryList();

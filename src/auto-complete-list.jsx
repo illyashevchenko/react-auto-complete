@@ -13,7 +13,7 @@ class ACList extends React.Component {
                                    onClick = {this.props.onItemClick.bind(null, listItem)}
                                    text = {listItem}
                                    key = {index}
-                                   ref = {index === 0 ? 'listItem' : ''} />
+                                   ref = {`item${index}`} />
             }),
             className = classNames('dropdown-menu scrollable-menu', {
                 show: this.props.show
@@ -26,6 +26,7 @@ class ACList extends React.Component {
 
     componentDidUpdate() {
         this.setHeight();
+        this.scrollList();
     }
 
 
@@ -35,11 +36,11 @@ class ACList extends React.Component {
 
 
     setHeight () {
-        if (!this.refs.listItem) {
+        if (!this.props.show || !this.refs.item0) {
             return;
         }
 
-        let itemHeight    = React.findDOMNode(this.refs.listItem).offsetHeight,
+        let itemHeight    = React.findDOMNode(this.refs.item0).offsetHeight,
             node          = React.findDOMNode(this),
             computedStyle = getComputedStyle(node),
             height        = this.heightAddenums.reduce((height, prop) => {
@@ -47,6 +48,21 @@ class ACList extends React.Component {
             }, itemHeight * this.props.itemsCount);
 
         node.style.maxHeight = height + 'px';
+    }
+
+
+    scrollList() {
+        if (!this.props.show || this.props.selected < 0) {
+            return;
+        }
+
+        let node = React.findDOMNode(this),
+            selectedNode = React.findDOMNode(this.refs[`item${this.props.selected}`]);
+
+        console.log(`item${this.props.selected}`);
+        console.log(node.scrollTop, selectedNode.offsetTop, node.offsetHeight);
+
+        node.scrollTop = selectedNode.offsetTop - node.offsetHeight / 2;
     }
 }
 
