@@ -62,7 +62,7 @@ class ACInput extends React.Component {
     }
 
     handleKeyDown(event) {
-        let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter
+        let keyCode = event.keyCode || event.which;
 
         if (keyCode === 13 && this.props.value !== this.state.value) {
             this.handleSearch();

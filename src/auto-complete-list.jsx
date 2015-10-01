@@ -39,6 +39,7 @@ class ACList extends React.Component {
         let node          = React.findDOMNode(this),
             computedStyle = getComputedStyle(node),
             itemHeight    = React.findDOMNode(this.refs.item0).offsetHeight,
+
             height        = ACList.heightAddenums.reduce((height, prop) => {
                 return height + parseInt(computedStyle[prop]);
             }, itemHeight * this.props.itemsCount);
