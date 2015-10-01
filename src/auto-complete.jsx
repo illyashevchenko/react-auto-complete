@@ -33,6 +33,7 @@ class AutoCompleteBox extends React.Component {
                              onSearch = {this.handleSearch.bind(this)} />
 
                     <ACList onItemClick = {this.handleItemClick.bind(this)}
+                            itemsCount = {this.props.itemsCount}
                             selected = {this.state.selected}
                             list = {this.state.list}
                             show = {this.state.showList}/>

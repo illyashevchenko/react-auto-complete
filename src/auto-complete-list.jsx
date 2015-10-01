@@ -12,15 +12,41 @@ class ACList extends React.Component {
                 return <ACListItem selected = {index === +this.props.selected}
                                    onClick = {this.props.onItemClick.bind(null, listItem)}
                                    text = {listItem}
-                                   key = {index} />
+                                   key = {index}
+                                   ref = {index === 0 ? 'listItem' : ''} />
             }),
-            className = classNames('dropdown-menu', {
+            className = classNames('dropdown-menu scrollable-menu', {
                 show: this.props.show
             });
 
         return  <ul className = {className}>
                     {listItemNodes}
                 </ul>;
+    }
+
+    componentDidUpdate() {
+        this.setHeight();
+    }
+
+
+    get heightAddenums() {
+        return ['border-top-width', 'border-bottom-width', 'padding-top', 'padding-bottom'];
+    }
+
+
+    setHeight () {
+        if (!this.refs.listItem) {
+            return;
+        }
+
+        let itemHeight    = React.findDOMNode(this.refs.listItem).offsetHeight,
+            node          = React.findDOMNode(this),
+            computedStyle = getComputedStyle(node),
+            height        = this.heightAddenums.reduce((height, prop) => {
+                return height + parseInt(computedStyle[prop]);
+            }, itemHeight * this.props.itemsCount);
+
+        node.style.maxHeight = height + 'px';
     }
 }
 

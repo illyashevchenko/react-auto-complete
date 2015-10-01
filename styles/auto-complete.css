@@ -54,3 +54,8 @@ body {
         transform: rotate(360deg);
     }
 }
+
+.scrollable-menu {
+    height: auto;
+    overflow-x: hidden;
+}
