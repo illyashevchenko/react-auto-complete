@@ -20,6 +20,8 @@ class AutoCompleteBox extends React.Component {
             loading : false,
             error   : false
         };
+
+        this.errorList = [this.props.error];
     }
 
 
@@ -35,6 +37,9 @@ class AutoCompleteBox extends React.Component {
                             itemsCount  = {this.props.itemsCount}
                             selected    = {this.state.selected}
                             list        = {this.state.list} />
+
+                    <ACList itemsCount  = {1}
+                            list        = {this.state.error ? this.errorList : []} />
                 </div>;
     }
 
@@ -54,6 +59,7 @@ class AutoCompleteBox extends React.Component {
 
         this.setState({
             list   : list,
+            error  : !list.length,
             loading: false
         })
     }
@@ -61,7 +67,7 @@ class AutoCompleteBox extends React.Component {
 
     handleListChangeError() {
         this.setState({
-            error  : true,
+            error  : !this.state.list.length,
             loading: false
         })
     }
@@ -69,7 +75,7 @@ class AutoCompleteBox extends React.Component {
 
     queryList() {
         this.setState({
-            loading : true
+            loading: true
         });
 
         listAction.filter({
@@ -130,6 +136,7 @@ class AutoCompleteBox extends React.Component {
         }
 
         this.setState({
+            error  : false,
             filter  : value,
             list    : [],
             selected: -1

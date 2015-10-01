@@ -24,14 +24,10 @@ class ACList extends React.Component {
                 </ul>;
     }
 
+
     componentDidUpdate() {
         this.setHeight();
         this.scrollList();
-    }
-
-
-    get heightAddenums() {
-        return ['border-top-width', 'border-bottom-width', 'padding-top', 'padding-bottom'];
     }
 
 
@@ -43,7 +39,7 @@ class ACList extends React.Component {
         let node          = React.findDOMNode(this),
             computedStyle = getComputedStyle(node),
             itemHeight    = React.findDOMNode(this.refs.item0).offsetHeight,
-            height        = this.heightAddenums.reduce((height, prop) => {
+            height        = ACList.heightAddenums.reduce((height, prop) => {
                 return height + parseInt(computedStyle[prop]);
             }, itemHeight * this.props.itemsCount);
 
@@ -63,5 +59,11 @@ class ACList extends React.Component {
     }
 }
 
+ACList.defaultProps = {
+    selected: -1,
+    onItemClick: () => {}
+};
+
+ACList.heightAddenums = ['border-top-width', 'border-bottom-width', 'padding-top', 'padding-bottom'];
 
 export default ACList;
