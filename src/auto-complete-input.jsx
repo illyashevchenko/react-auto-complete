@@ -23,10 +23,10 @@ class ACInput extends React.Component {
 
         return <div className = 'input-group'>
                     <input placeholder = {placeholder}
-                           className = 'form-control'
-                           onChange = {this.handleChange.bind(this)}
-                           value = {this.state.value}
-                           type = 'text' />
+                           className   = 'form-control'
+                           onChange    = {this.handleChange.bind(this)}
+                           value       = {this.state.value}
+                           type        = 'text' />
                     <ACInputButton className = 'glyphicon loader'
                                    show = {loading} />
                     <ACInputButton className = 'glyphicon glyphicon-search'
