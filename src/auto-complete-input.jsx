@@ -38,6 +38,15 @@ class ACInput extends React.Component {
     }
 
 
+    componentWillReceiveProps(props) {
+        if (props.value !== this.props.value) {
+            this.setState({
+                value: props.value
+            });
+        }
+    }
+
+
     handleSearch() {
         this.props.onChange(this.state.value);
     }

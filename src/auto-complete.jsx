@@ -29,6 +29,7 @@ class AutoCompleteBox extends React.Component {
                     <ACInput placeholder = {this.props.placeholder}
                              debounce = {this.props.debounce}
                              loading  = {this.state.loading}
+                             value    = {this.state.filter}
                              onChange = {this.handleFiltering.bind(this)}
                              onSearch = {this.handleSearch.bind(this)} />
 
@@ -70,20 +71,6 @@ class AutoCompleteBox extends React.Component {
     }
 
 
-    handleFiltering(value) {
-        this.setState({
-            filter  : value,
-            list    : [],
-            selected: -1,
-            showList: false
-        });
-
-        if (value.length >= this.props.minLetters) {
-            this.queryList();
-        }
-    }
-
-
     queryList() {
         this.setState({
             loading : true
@@ -113,7 +100,7 @@ class AutoCompleteBox extends React.Component {
                 event.preventDefault();
                 break;
             case 39:
-                this.handleComplete();
+                this.handleAutoComplete();
                 break;
         }
     }
@@ -141,6 +128,20 @@ class AutoCompleteBox extends React.Component {
     }
 
 
+    handleFiltering(value) {
+        this.setState({
+            filter  : value,
+            list    : [],
+            selected: -1,
+            showList: false
+        });
+
+        if (value.length >= this.props.minLetters) {
+            this.queryList();
+        }
+    }
+
+
     handleSearch() {
         if (this.state.filter) {
             this.handleItemClick(this.state.filter);
@@ -148,7 +149,7 @@ class AutoCompleteBox extends React.Component {
     }
 
 
-    handleComplete() {
+    handleAutoComplete() {
         if (this.state.showList && this.state.list[0]) {
             this.handleItemClick(this.state.list[0]);
         }

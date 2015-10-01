@@ -59,9 +59,6 @@ class ACList extends React.Component {
         let node = React.findDOMNode(this),
             selectedNode = React.findDOMNode(this.refs[`item${this.props.selected}`]);
 
-        console.log(`item${this.props.selected}`);
-        console.log(node.scrollTop, selectedNode.offsetTop, node.offsetHeight);
-
         node.scrollTop = selectedNode.offsetTop - node.offsetHeight / 2;
     }
 }
