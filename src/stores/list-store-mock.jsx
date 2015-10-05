@@ -10,8 +10,8 @@ export default {
     },
 
 
-    bind: function (success, fail) {
-        if (typeof success !== 'function' || typeof fail !== 'function') {
+    bind: function (success, fail = () => {}) {
+        if (typeof success !== 'function') {
             return () => {};
         }
 

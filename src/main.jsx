@@ -3,9 +3,9 @@
  */
 import React from 'react';
 import HelloWorld from './components/hello/hello';
+import Result from './components/result/result';
 
 import AutoCompleteBox from './components/auto-complete/auto-complete';
-import listAction from './actions/list-action-mock';
 
 
 React.render(
@@ -14,9 +14,10 @@ React.render(
 );
 
 
-listAction.select = (string) => {
-    document.getElementById('result').textContent = `Selected item first name is ${string}`;
-};
+React.render(
+    <Result />,
+    document.getElementById('result')
+);
 
 
 React.render(

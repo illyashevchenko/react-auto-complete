@@ -1,10 +1,9 @@
 /**
  * Created by Illia_Shevchenko on 29.09.2015.
  */
-import listSore from '../stores/list-store-mock'
+import listStore from '../stores/list-store-mock'
 
 
 export default {
-    filter: listSore.filter.bind(listSore),
-    select: () => {}
+    filter: listStore.filter.bind(listStore)
 };

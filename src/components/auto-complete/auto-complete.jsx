@@ -7,6 +7,7 @@ import ACList from './auto-complete-list';
 
 import listStore from '../../stores/list-store-mock';
 import listAction from '../../actions/list-action-mock';
+import resultAction from '../../actions/result-action-mock';
 
 
 class AutoCompleteBox extends React.Component {
@@ -175,6 +176,8 @@ class AutoCompleteBox extends React.Component {
             selected: -1,
             list    : []
         });
+
+        resultAction.set(itemValue);
     }
 }
 
