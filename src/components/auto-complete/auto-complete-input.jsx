@@ -18,27 +18,6 @@ class ACInput extends React.Component {
     }
 
 
-    render() {
-        let {onChange, placeholder, loading} = this.props;
-
-        return <div className = 'input-group'>
-                    <input placeholder = {placeholder}
-                           className   = 'form-control'
-                           onChange    = {this.handleChange.bind(this)}
-                           onKeyDown   = {this.handleKeyDown.bind(this)}
-                           value       = {this.state.value}
-                           type        = 'text' />
-                    <ACInputButton className = 'glyphicon loader'
-                                   show = {loading} />
-                    <ACInputButton className = 'glyphicon glyphicon-search'
-                                   onClick = {this.handleSearch.bind(this)}
-                                   show = {!loading} />
-                    <ACInputButton className = 'glyphicon glyphicon-remove'
-                                   onClick = {onChange.bind(null, '')} />
-                </div>;
-    }
-
-
     componentWillReceiveProps(props) {
         if (props.value !== this.props.value) {
             this.setState({
@@ -69,7 +48,43 @@ class ACInput extends React.Component {
             this.handleSearch();
         }
     }
+
+
+    render() {
+        let { onChange, placeholder, loading } = this.props;
+
+        return <div className = 'input-group'>
+            <input className   = 'form-control'
+                   onChange    = {this.handleChange.bind(this)}
+                   onKeyDown   = {this.handleKeyDown.bind(this)}
+                   placeholder = {placeholder}
+                   type        = 'text'
+                   value       = {this.state.value} />
+            <ACInputButton className = 'glyphicon loader'
+                           show      = {loading} />
+            <ACInputButton className = 'glyphicon glyphicon-search'
+                           onClick   = {this.handleSearch.bind(this)}
+                           show      = {!loading} />
+            <ACInputButton className = 'glyphicon glyphicon-remove'
+                           onClick   = {onChange.bind(null, '')} />
+        </div>;
+    }
 }
+
+ACInput.propTypes = {
+    debounce    : React.PropTypes.number,
+    loading     : React.PropTypes.boolean,
+    onChange    : React.PropTypes.func.isRequired,
+    placeholder : React.PropTypes.string,
+    value       : React.PropTypes.string
+};
+
+
+ACInput.defaultProps = {
+    debounce   : 0,
+    loading    : false,
+    placeholder: ''
+};
 
 
 export default ACInput;

@@ -9,4 +9,9 @@ class HelloWorld extends React.Component {
     }
 }
 
+
+HelloWorld.propTypes = {
+    phrase: React.PropTypes.string
+};
+
 export default HelloWorld;

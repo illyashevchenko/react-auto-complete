@@ -12,14 +12,7 @@ class Result extends React.Component {
 
         this.state = {
             text: ''
-        }
-    }
-
-
-    render() {
-        var text = this.state.text ? `Selected item first name is ${this.state.text}` : '';
-
-        return <span>{text}</span>
+        };
     }
 
 
@@ -37,6 +30,13 @@ class Result extends React.Component {
         this.setState({
             text: text
         });
+    }
+
+
+    render() {
+        var text = this.state.text ? `Selected item first name is ${this.state.text}` : '';
+
+        return <span>{text}</span>;
     }
 }
 

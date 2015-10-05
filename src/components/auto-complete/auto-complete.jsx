@@ -26,25 +26,6 @@ class AutoCompleteBox extends React.Component {
     }
 
 
-    render() {
-        return <div className = 'dropdown' onKeyDown = {this.handleKeyDown.bind(this)}>
-                    <ACInput placeholder = {this.props.placeholder}
-                             debounce = {this.props.debounce}
-                             loading  = {this.state.loading}
-                             value    = {this.state.filter}
-                             onChange = {this.handleFiltering.bind(this)} />
-
-                    <ACList onItemClick = {this.handleItemClick.bind(this)}
-                            itemsCount  = {this.props.itemsCount}
-                            selected    = {this.state.selected}
-                            list        = {this.state.list} />
-
-                    <ACList itemsCount  = {1}
-                            list        = {this.state.error ? this.errorList : []} />
-                </div>;
-    }
-
-
     componentDidMount() {
         this.unbind = listStore.bind(this.handleListChange.bind(this), this.handleListChangeError.bind(this));
     }
@@ -62,7 +43,7 @@ class AutoCompleteBox extends React.Component {
             list   : list,
             error  : !list.length,
             loading: false
-        })
+        });
     }
 
 
@@ -70,7 +51,7 @@ class AutoCompleteBox extends React.Component {
         this.setState({
             error  : !this.state.list.length,
             loading: false
-        })
+        });
     }
 
 
@@ -179,7 +160,35 @@ class AutoCompleteBox extends React.Component {
 
         resultAction.set(itemValue);
     }
+
+
+    render() {
+        return <div className = 'dropdown'
+                    onKeyDown = {this.handleKeyDown.bind(this)}>
+                    <ACInput debounce    = {this.props.debounce}
+                             loading     = {this.state.loading}
+                             onChange    = {this.handleFiltering.bind(this)}
+                             placeholder = {this.props.placeholder}
+                             value       = {this.state.filter} />
+
+                    <ACList itemsCount  = {this.props.itemsCount}
+                            list        = {this.state.list}
+                            onItemClick = {this.handleItemClick.bind(this)}
+                            selected    = {this.state.selected} />
+
+                    <ACList itemsCount  = {1}
+                            list        = {this.state.error ? this.errorList : []} />
+               </div>;
+    }
 }
 
+
+AutoCompleteBox.propTypes = {
+    debounce   : React.PropTypes.number.isRequired,
+    error      : React.PropTypes.string,
+    itemsCount : React.PropTypes.number.isRequired,
+    minLetters : React.PropTypes.number.isRequired,
+    placeholder: React.PropTypes.string
+};
 
 export default AutoCompleteBox;

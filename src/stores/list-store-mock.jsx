@@ -44,7 +44,7 @@ export default {
         }, 1000);
     },
 
-    
+
     /*eslint-disable quotes, quote-props */
     list: [
         {
