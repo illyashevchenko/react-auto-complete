@@ -163,22 +163,24 @@ class AutoCompleteBox extends React.Component {
 
 
     render() {
-        return <div className = 'dropdown'
-                    onKeyDown = {this.handleKeyDown.bind(this)}>
-                    <ACInput debounce    = {this.props.debounce}
-                             loading     = {this.state.loading}
-                             onChange    = {this.handleFiltering.bind(this)}
-                             placeholder = {this.props.placeholder}
-                             value       = {this.state.filter} />
-
-                    <ACList itemsCount  = {this.props.itemsCount}
-                            list        = {this.state.list}
-                            onItemClick = {this.handleItemClick.bind(this)}
-                            selected    = {this.state.selected} />
-
-                    <ACList itemsCount  = {1}
-                            list        = {this.state.error ? this.errorList : []} />
-               </div>;
+        return <div
+            className = 'dropdown'
+            onKeyDown = {this.handleKeyDown.bind(this)}>
+            <ACInput
+                debounce    = {this.props.debounce}
+                loading     = {this.state.loading}
+                onChange    = {this.handleFiltering.bind(this)}
+                placeholder = {this.props.placeholder}
+                value       = {this.state.filter} />
+            <ACList
+                itemsCount  = {this.props.itemsCount}
+                list        = {this.state.list}
+                onItemClick = {this.handleItemClick.bind(this)}
+                selected    = {this.state.selected} />
+            <ACList
+                itemsCount  = {1}
+                list        = {this.state.error ? this.errorList : []} />
+        </div>;
     }
 }
 

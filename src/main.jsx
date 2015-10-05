@@ -21,10 +21,11 @@ React.render(
 
 
 React.render(
-    <AutoCompleteBox debounce    = {2000}
-                     error       = 'Sorry, could not find anything'
-                     itemsCount  = {5}
-                     minLetters  = {2}
-                     placeholder = 'Start typing...'/>,
+    <AutoCompleteBox
+        debounce    = {2000}
+        error       = 'Sorry, could not find anything'
+        itemsCount  = {5}
+        minLetters  = {2}
+        placeholder = 'Start typing...'/>,
     document.getElementById('select')
 );

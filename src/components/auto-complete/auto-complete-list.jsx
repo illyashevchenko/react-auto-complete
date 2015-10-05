@@ -44,11 +44,12 @@ class ACList extends React.Component {
 
     render() {
         let listItemNodes = this.props.list.map((listItem, index) => {
-                return <ACListItem key      = {index}
-                                   onClick  = {this.props.onItemClick.bind(null, listItem)}
-                                   ref      = {`item${index}`}
-                                   selected = {index === +this.props.selected}
-                                   text     = {listItem} />;
+                return <ACListItem
+                    key      = {index}
+                    onClick  = {this.props.onItemClick.bind(null, listItem)}
+                    ref      = {`item${index}`}
+                    selected = {index === +this.props.selected}
+                    text     = {listItem} />;
             }),
             className = classNames('dropdown-menu scrollable-menu', {
                 show: this.props.list.length

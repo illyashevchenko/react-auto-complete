@@ -12,14 +12,16 @@ class ACInputButton extends React.Component {
             hide: typeof show === 'boolean' && !show
         });
 
-        return <span className = {containerClassName}
-                     onClick   = {onClick}>
-                   <button className = 'btn btn-default'
-                           type      = 'button'>
-                       <span className = {className}></span>
-                   </button>
-               </span>;
-    }
+        return <span
+            className = {containerClassName}
+            onClick   = {onClick}>
+            <button
+                className = 'btn btn-default'
+                type      = 'button'>
+                <span className = {className}></span>
+            </button>
+        </span>;
+}
 }
 
 ACInputButton.propTypes = {
