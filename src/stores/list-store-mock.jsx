@@ -30,8 +30,8 @@ export default {
     },
 
 
-    filter: function ({query, start, count}) {
-        console.log('Query list: ', query, start, count);
+    filter: function ({ query, start, count }) {
+        console.log('Query list: ', query, start, count);// eslint-disable-line no-console
         query = query.toUpperCase();
 
         setTimeout(() => {
@@ -44,7 +44,8 @@ export default {
         }, 1000);
     },
 
-
+    
+    /*eslint-disable quotes, quote-props */
     list: [
         {
             "registered": "Thursday, July 2, 2015 6:51 AM",
@@ -335,4 +336,5 @@ export default {
             "index": 18
         }
     ]
+    /*eslint-enable quotes, quote-props */
 };

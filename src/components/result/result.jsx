@@ -33,7 +33,7 @@ class Result extends React.Component {
     }
 
 
-    handleTextChange(text){
+    handleTextChange(text) {
         this.setState({
             text: text
         });
