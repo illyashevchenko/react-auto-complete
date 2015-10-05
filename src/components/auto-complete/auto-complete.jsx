@@ -5,8 +5,8 @@ import React from 'react';
 import ACInput from './auto-complete-input';
 import ACList from './auto-complete-list';
 
-import listStore from './list-store-mock';
-import listAction from './list-action-mock';
+import listStore from '../../stores/list-store-mock';
+import listAction from '../../actions/list-action-mock';
 
 
 class AutoCompleteBox extends React.Component {

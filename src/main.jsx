@@ -2,10 +2,10 @@
  * Created by Illia_Shevchenko on 28.09.2015.
  */
 import React from 'react';
-import HelloWorld from './hello';
+import HelloWorld from './components/hello/hello';
 
-import AutoCompleteBox from './auto-complete';
-import listAction from './list-action-mock';
+import AutoCompleteBox from './components/auto-complete/auto-complete';
+import listAction from './actions/list-action-mock';
 
 
 React.render(

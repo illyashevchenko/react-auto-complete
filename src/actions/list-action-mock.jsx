@@ -1,7 +1,7 @@
 /**
  * Created by Illia_Shevchenko on 29.09.2015.
  */
-import listSore from './list-store-mock'
+import listSore from '../stores/list-store-mock'
 
 
 export default {
