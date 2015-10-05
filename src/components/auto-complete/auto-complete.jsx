@@ -14,13 +14,10 @@ class AutoCompleteBox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = Object.assign(listStore.getState(), {
       selected: -1,
-      filter  : '',
-      list    : [],
-      loading : false,
-      error   : false
-    };
+      filter  : ''
+    });
 
     this.errorList = [this.props.error];
     this.handleListChange = this.handleListChange.bind(this);
@@ -37,31 +34,13 @@ class AutoCompleteBox extends React.Component {
   }
 
 
-  handleListChange({ list }) {
-    list = this.state.list.concat(list);
-
-    this.setState({
-      list   : list,
-      error  : !list.length,
-      loading: false
-    });
-  }
-
-
-  handleListChangeError() {
-    this.setState({
-      error  : !this.state.list.length,
-      loading: false
-    });
+  handleListChange(state) {
+    this.setState(state);
   }
 
 
   queryList() {
-    this.setState({
-      loading: true
-    });
-
-    listAction.filter({
+    listAction.fetch({
       query: this.state.filter,
       start: this.state.list.length,
       count: this.props.itemsCount
@@ -118,10 +97,11 @@ class AutoCompleteBox extends React.Component {
       return;
     }
 
+    listAction.clear();
+    listAction.clearError();
+
     this.setState({
-      error  : false,
       filter  : value,
-      list    : [],
       selected: -1
     }, () => {
       if (value.length >= this.props.minLetters) {
@@ -155,10 +135,10 @@ class AutoCompleteBox extends React.Component {
   handleItemClick(itemValue) {
     this.setState({
       filter  : itemValue,
-      selected: -1,
-      list    : []
+      selected: -1
     });
 
+    listAction.clear();
     resultAction.set(itemValue);
   }
 
