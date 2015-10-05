@@ -55,9 +55,10 @@ class ACList extends React.Component {
                 show: this.props.list.length
             });
 
-        return  <ul className = {className}>
-                    {listItemNodes}
-                </ul>;
+        return  <ul
+            className = {className}>
+            {listItemNodes}
+        </ul>;
     }
 }
 
