@@ -5,5 +5,5 @@ import listStore from '../stores/list-store-mock';
 
 
 export default {
-    filter: listStore.filter.bind(listStore)
+  filter: listStore.filter.bind(listStore)
 };

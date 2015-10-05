@@ -5,36 +5,36 @@ import React from 'react';
 import classNames from 'classnames';
 
 class ACInputButton extends React.Component {
-    render() {
-        let { onClick = () => {}, className, show } = this.props;
+  render() {
+    let { onClick = () => {}, className, show } = this.props;
 
-        let containerClassName = classNames('input-group-btn', { //use the second let, because IDE resists to catch syntax when one using one let
-            hide: typeof show === 'boolean' && !show
-        });
+    let containerClassName = classNames('input-group-btn', { //use the second let, because IDE resists to catch syntax when one using one let
+      hide: typeof show === 'boolean' && !show
+    });
 
-        return <span
-            className = {containerClassName}
-            onClick   = {onClick}>
-            <button
-                className = 'btn btn-default'
-                type      = 'button'>
-                <span className = {className}></span>
-            </button>
+    return <span
+        className = {containerClassName}
+        onClick   = {onClick}>
+          <button
+              className = 'btn btn-default'
+              type      = 'button'>
+            <span className = {className}></span>
+          </button>
         </span>;
-}
+  }
 }
 
 ACInputButton.propTypes = {
-    className: React.PropTypes.string.isRequired,
-    onClick  : React.PropTypes.func,
-    show     : React.PropTypes.boolean
+  className: React.PropTypes.string.isRequired,
+  onClick  : React.PropTypes.func,
+  show     : React.PropTypes.bool
 
 };
 
 
 ACInputButton.defaultProps = {
-    //show   : true,
-    onClick: () => {}
+  //show   : true,
+  onClick: () => {}
 };
 
 
