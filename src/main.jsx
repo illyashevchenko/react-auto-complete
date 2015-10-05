@@ -9,7 +9,7 @@ import AutoCompleteBox from './components/auto-complete/auto-complete';
 
 
 React.render(
-    <HelloWorld phrase="ES678"/>,
+    <HelloWorld phrase = 'ES678'/>,
     document.getElementById('test')
 );
 
