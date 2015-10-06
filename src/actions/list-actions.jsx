@@ -25,11 +25,6 @@ class ListActions {
   }
 
 
-  reset() {
-    this.dispatch();
-  }
-
-
   clear() {
     this.dispatch();
   }

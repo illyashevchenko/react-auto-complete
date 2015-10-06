@@ -42,6 +42,22 @@ class ACList extends React.Component {
   }
 
 
+  handleScroll(event) {
+    if (event.deltaY <= 0) {
+      return;
+    }
+
+    let list   = React.findDOMNode(this),
+        endTop = list.offsetHeight - list.clientHeight;
+
+    if (endTop > list.offsetTop) {
+      return;
+    }
+
+    this.props.onScrollBottom();
+  }
+
+
   render() {
     let listItemNodes = this.props.list.map((listItem, index) => {
           return <ACListItem
@@ -56,17 +72,19 @@ class ACList extends React.Component {
         });
 
     return  <ul
-        className = {className}>
+        className = {className}
+        onWheel   = {this.handleScroll.bind(this)}>
       {listItemNodes}
     </ul>;
   }
 }
 
 ACList.propTypes = {
-  itemsCount : React.PropTypes.number.isRequired,
-  list       : React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  onItemClick: React.PropTypes.func,
-  selected   : React.PropTypes.number
+  itemsCount    : React.PropTypes.number.isRequired,
+  list          : React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  onItemClick   : React.PropTypes.func,
+  onScrollBottom: React.PropTypes.func,
+  selected      : React.PropTypes.number
 };
 
 

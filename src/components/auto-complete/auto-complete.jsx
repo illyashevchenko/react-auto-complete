@@ -41,6 +41,10 @@ class AutoCompleteBox extends React.Component {
 
 
   queryList() {
+    if (this.state.loading) {
+      return;
+    }
+
     ListActions.fetch({
       query: this.state.filter,
       start: this.state.list.length,
@@ -76,7 +80,7 @@ class AutoCompleteBox extends React.Component {
       return;
     }
 
-    let loadPosition = this.state.list.length - this.props.itemsCount / 2, //TODO: this formula may be changed
+    let loadPosition = this.state.list.length - 2, //this.state.list.length - this.props.itemsCount / 2, //TODO: this formula may be changed
         selected     = this.state.selected + step;
 
 
@@ -98,7 +102,7 @@ class AutoCompleteBox extends React.Component {
       return;
     }
 
-    ListActions.reset();
+    ListActions.clear();
 
     this.setState({
       filter  : value,
@@ -164,10 +168,11 @@ class AutoCompleteBox extends React.Component {
             onClick   = {this.handleFiltering.bind(this, '')} />
       </ACInput>
       <ACList
-          itemsCount  = {this.props.itemsCount}
-          list        = {this.state.list}
-          onItemClick = {this.handleItemClick.bind(this)}
-          selected    = {this.state.selected} />
+          itemsCount     = {this.props.itemsCount}
+          list           = {this.state.list}
+          onItemClick    = {this.handleItemClick.bind(this)}
+          onScrollBottom = {this.queryList.bind(this)}
+          selected       = {this.state.selected} />
       <ACList
           itemsCount  = {1}
           list        = {this.state.error ? this.errorList : []} />

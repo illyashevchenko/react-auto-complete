@@ -15,8 +15,7 @@ class ListStore {
       handleFetch : ListActions.FETCH,
       handleUpdate: ListActions.UPDATE,
       handleError : ListActions.ERROR,
-      handleClear : ListActions.CLEAR,
-      handleReset : ListActions.RESET
+      handleClear : ListActions.CLEAR
     });
   }
 
@@ -44,11 +43,8 @@ class ListStore {
 
 
   handleClear() {
+    this.loading = false;
     this.list = [];
-  }
-
-  handleReset() {
-    this.list  = [];
     this.error = false;
   }
 }
