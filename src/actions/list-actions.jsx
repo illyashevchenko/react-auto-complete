@@ -25,7 +25,7 @@ class ListActions {
   }
 
 
-  clearError() {
+  reset() {
     this.dispatch();
   }
 

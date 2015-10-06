@@ -8,23 +8,22 @@ import ListActions from '../actions/list-actions';
 class ListStore {
   constructor() {
     this.loading = false;
-
-    this.handleClear();
-    this.handleClearError();
+    this.list    = [];
+    this.error   = false;
 
     this.bindListeners({
-      handleFetch     : ListActions.FETCH,
-      handleUpdate    : ListActions.UPDATE,
-      handleError     : ListActions.ERROR,
-      handleClear     : ListActions.CLEAR,
-      handleClearError: ListActions.CLEAR_ERROR
+      handleFetch : ListActions.FETCH,
+      handleUpdate: ListActions.UPDATE,
+      handleError : ListActions.ERROR,
+      handleClear : ListActions.CLEAR,
+      handleReset : ListActions.RESET
     });
   }
 
 
   handleFetch() {
-    this.loading = this.list;
-    this.handleClearError();
+    this.loading = true;
+    this.error   = false;
   }
 
 
@@ -48,7 +47,8 @@ class ListStore {
     this.list = [];
   }
 
-  handleClearError() {
+  handleReset() {
+    this.list  = [];
     this.error = false;
   }
 }

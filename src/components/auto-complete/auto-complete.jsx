@@ -97,8 +97,7 @@ class AutoCompleteBox extends React.Component {
       return;
     }
 
-    listAction.clear();
-    listAction.clearError();
+    listAction.reset();
 
     this.setState({
       filter  : value,
