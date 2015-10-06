@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import ACInput from './auto-complete-input';
+import ACInputButton from './auto-complete-input-button';
 import ACList from './auto-complete-list';
 
 import ListStore from '../../stores/list-store';
@@ -148,10 +149,20 @@ class AutoCompleteBox extends React.Component {
         onKeyDown = {this.handleKeyDown.bind(this)}>
       <ACInput
           debounce    = {this.props.debounce}
-          loading     = {this.state.loading}
           onChange    = {this.handleFiltering.bind(this)}
           placeholder = {this.props.placeholder}
-          value       = {this.state.filter} />
+          value       = {this.state.filter} >
+        <ACInputButton
+            className = 'glyphicon loader'
+            show      = {this.state.loading} />
+        <ACInputButton
+            className = 'glyphicon glyphicon-search'
+            onClick   = {this.handleFiltering.bind(this)}
+            show      = {!this.state.loading} />
+        <ACInputButton
+            className = 'glyphicon glyphicon-remove'
+            onClick   = {this.handleFiltering.bind(this, '')} />
+      </ACInput>
       <ACList
           itemsCount  = {this.props.itemsCount}
           list        = {this.state.list}

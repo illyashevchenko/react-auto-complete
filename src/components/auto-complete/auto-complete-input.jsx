@@ -2,7 +2,6 @@
  * Created by Illia_Shevchenko on 28.09.2015.
  */
 import React from 'react';
-import ACInputButton from './auto-complete-input-button';
 import _ from 'underscore';
 
 
@@ -51,7 +50,7 @@ class ACInput extends React.Component {
 
 
   render() {
-    let { onChange, placeholder, loading } = this.props;
+    let { placeholder } = this.props;
 
     return <div className = 'input-group'>
       <input
@@ -61,23 +60,14 @@ class ACInput extends React.Component {
           placeholder = {placeholder}
           type        = 'text'
           value       = {this.state.value} />
-      <ACInputButton
-          className = 'glyphicon loader'
-          show      = {loading} />
-      <ACInputButton
-          className = 'glyphicon glyphicon-search'
-          onClick   = {this.handleSearch.bind(this)}
-          show      = {!loading} />
-      <ACInputButton
-          className = 'glyphicon glyphicon-remove'
-          onClick   = {onChange.bind(null, '')} />
+      {this.props.children}
     </div>;
   }
 }
 
 ACInput.propTypes = {
+  children    : React.PropTypes.array,
   debounce    : React.PropTypes.number,
-  loading     : React.PropTypes.bool,
   onChange    : React.PropTypes.func.isRequired,
   placeholder : React.PropTypes.string,
   value       : React.PropTypes.string
@@ -85,8 +75,8 @@ ACInput.propTypes = {
 
 
 ACInput.defaultProps = {
+  children   : [],
   debounce   : 0,
-  loading    : false,
   placeholder: ''
 };
 
