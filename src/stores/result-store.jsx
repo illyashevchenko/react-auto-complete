@@ -20,5 +20,4 @@ class ResultStore {
   }
 }
 
-
 export default alt.createStore(ResultStore, 'ResultStore');

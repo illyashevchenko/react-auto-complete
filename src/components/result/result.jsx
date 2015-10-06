@@ -3,42 +3,18 @@
  */
 import React from 'react';
 
-import ResultStore from '../../stores/result-store';
-
 
 class Result extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      result: ''
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-
-  componentDidMount() {
-    ResultStore.listen(this.handleChange);
-  }
-
-
-  componentWillUnmount() {
-    ResultStore.unlisten(this.handleChange);
-  }
-
-
-  handleChange(state) {
-    this.setState(state);
-  }
-
-
   render() {
-    var result = this.state.result ? `Selected item first name is ${this.state.result}` : '';
+    var result = this.props.result ? `Selected item first name is ${this.props.result}` : '';
 
     return <span>{result}</span>;
   }
 }
+
+Result.propTypes = {
+  result: React.PropTypes.string
+};
 
 
 export default Result;

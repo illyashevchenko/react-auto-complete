@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import HelloWorld from './components/hello/hello';
-import Result from './components/result/result';
+import Result from './containers/result-container';
 
 import AutoCompleteBox from './components/auto-complete/auto-complete';
 
