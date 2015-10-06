@@ -3,41 +3,41 @@
  */
 import React from 'react';
 
-import resultStore from '../../stores/result-store-mock';
+import ResultStore from '../../stores/result-store';
 
 
 class Result extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            text: ''
-        };
-    }
+    this.state = {
+      result: ''
+    };
 
-
-    componentDidMount() {
-        this.unbind = resultStore.bind(this.handleTextChange.bind(this));
-    }
+    this.handleChange = this.handleChange.bind(this);
+  }
 
 
-    componentWillUnmount() {
-        this.unbind();
-    }
+  componentDidMount() {
+    ResultStore.listen(this.handleChange);
+  }
 
 
-    handleTextChange(text) {
-        this.setState({
-            text: text
-        });
-    }
+  componentWillUnmount() {
+    ResultStore.unlisten(this.handleChange);
+  }
 
 
-    render() {
-        var text = this.state.text ? `Selected item first name is ${this.state.text}` : '';
+  handleChange(state) {
+    this.setState(state);
+  }
 
-        return <span>{text}</span>;
-    }
+
+  render() {
+    var result = this.state.result ? `Selected item first name is ${this.state.result}` : '';
+
+    return <span>{result}</span>;
+  }
 }
 
 

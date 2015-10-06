@@ -5,16 +5,16 @@ import React from 'react';
 import ACInput from './auto-complete-input';
 import ACList from './auto-complete-list';
 
-import listStore from '../../stores/list-store';
-import listAction from '../../actions/list-actions';
-import resultAction from '../../actions/result-action-mock';
+import ListStore from '../../stores/list-store';
+import ListActions from '../../actions/list-actions';
+import ResultActions from '../../actions/result-actions';
 
 
 class AutoCompleteBox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign(listStore.getState(), {
+    this.state = Object.assign(ListStore.getState(), {
       selected: -1,
       filter  : ''
     });
@@ -25,12 +25,12 @@ class AutoCompleteBox extends React.Component {
 
 
   componentDidMount() {
-    this.unbind = listStore.listen(this.handleListChange);
+    ListStore.listen(this.handleListChange);
   }
 
 
   componentWillUnmount() {
-    this.unlisten(this.handleListChange);
+    ListStore.unlisten(this.handleListChange);
   }
 
 
@@ -40,7 +40,7 @@ class AutoCompleteBox extends React.Component {
 
 
   queryList() {
-    listAction.fetch({
+    ListActions.fetch({
       query: this.state.filter,
       start: this.state.list.length,
       count: this.props.itemsCount
@@ -82,7 +82,7 @@ class AutoCompleteBox extends React.Component {
     selected = Math.max(selected, -1);
     selected = Math.min(selected, this.state.list.length - 1);
 
-    if (selected > loadPosition) {
+    if (selected > loadPosition) { //TODO: If we select item we should reset that process of fetching list
       this.queryList();
     }
 
@@ -97,7 +97,7 @@ class AutoCompleteBox extends React.Component {
       return;
     }
 
-    listAction.reset();
+    ListActions.reset();
 
     this.setState({
       filter  : value,
@@ -137,8 +137,8 @@ class AutoCompleteBox extends React.Component {
       selected: -1
     });
 
-    listAction.clear();
-    resultAction.set(itemValue);
+    ListActions.clear();
+    ResultActions.set(itemValue);
   }
 
 
