@@ -26,6 +26,11 @@ class ACInput extends React.Component {
   }
 
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.value !== this.props.value || nextState.value !== this.state.value;
+  }
+
+
   handleSearch() {
     this.props.onChange(this.state.value);
   }
