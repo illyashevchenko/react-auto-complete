@@ -6,34 +6,27 @@ import listSource from '../sources/list-source';
 
 
 class ListActions {
-  update(list) {
-    this.dispatch(list);
+  update(data) {
+    this.dispatch(data);
   }
 
 
   fetch({ query, start, count }) {
     this.dispatch();
 
-    if (this.loading) {
-      return;
-    }
-
-    this.loading = listSource.fetch(query, start, count)
-        .then((list) => {
-          this.actions.update(list);
-          this.loading = null;
-        })
+    listSource.fetch(query, start, count)
+        .then(this.actions.update.bind(this))
         .catch(this.actions.error.bind(this));
   }
 
 
-  error(errorMessage) {
-    this.dispatch(errorMessage);
+  error(data) {
+    this.dispatch(data);
   }
 
 
-  serveTo(itemNumber) {
-    this.dispatch(itemNumber);
+  serveTo(data) {
+    this.dispatch(data);
   }
 
 

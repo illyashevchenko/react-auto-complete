@@ -94,10 +94,16 @@ class AutoCompleteBox extends React.Component {
       return;
     }
 
-    ListActions.setFilter(value, {
-      start: 0,
-      count: this.props.itemsCount
-    });
+    let query;
+
+    if (value.length >= this.props.minLetters) {
+      query = {
+        start: 0,
+        count: this.props.itemsCount
+      };
+    }
+
+    ListActions.setFilter(value, query);
   }
 
 
