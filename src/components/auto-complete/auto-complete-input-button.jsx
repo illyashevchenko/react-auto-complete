@@ -5,6 +5,11 @@ import React from 'react';
 import classNames from 'classnames';
 
 class ACInputButton extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.show !== this.props.show || nextProps.className !== this.props.className;
+  }
+
+
   render() {
     let { onClick = () => {}, className, show } = this.props;
 
@@ -28,7 +33,6 @@ ACInputButton.propTypes = {
   className: React.PropTypes.string.isRequired,
   onClick  : React.PropTypes.func,
   show     : React.PropTypes.bool
-
 };
 
 

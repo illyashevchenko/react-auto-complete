@@ -6,6 +6,11 @@ import classNames from 'classnames';
 
 
 class ACListItem extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.selected !== this.props.selected || nextProps.text !== this.props.text;
+  }
+
+
   render() {
     let className = classNames({
       active: this.props.selected
