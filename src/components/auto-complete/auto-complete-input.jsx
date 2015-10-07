@@ -27,7 +27,7 @@ class ACInput extends React.Component {
 
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.value !== this.props.value || nextState.value !== this.state.value;
+    return nextState.value !== this.state.value;
   }
 
 
