@@ -152,11 +152,13 @@ class AutoCompleteBox extends React.Component {
     return <div
         className = 'dropdown'
         onKeyDown = {this.handleKeyDown.bind(this)}>
-      <ACInput
-          debounce    = {this.props.debounce}
-          onChange    = {this.handleFiltering.bind(this)}
-          placeholder = {this.props.placeholder}
-          value       = {this.state.filter} >
+      <div className = 'input-group'>
+        <ACInput
+            className   = 'form-control'
+            debounce    = {this.props.debounce}
+            onChange    = {this.handleFiltering.bind(this)}
+            placeholder = {this.props.placeholder}
+            value       = {this.state.filter} />
         <ACInputButton
             className = 'glyphicon loader'
             show      = {this.state.loading} />
@@ -167,7 +169,7 @@ class AutoCompleteBox extends React.Component {
         <ACInputButton
             className = 'glyphicon glyphicon-remove'
             onClick   = {this.handleFiltering.bind(this, '')} />
-      </ACInput>
+      </div>
       <ACList
           itemsCount     = {this.props.itemsCount}
           list           = {this.state.list}

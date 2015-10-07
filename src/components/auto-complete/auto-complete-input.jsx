@@ -26,9 +26,9 @@ class ACInput extends React.Component {
   }
 
 
-  //shouldComponentUpdate(nextProps, nextState) {
-  //  return nextProps.value !== this.props.value || nextState.value !== this.state.value;
-  //}
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.value !== this.props.value || nextState.value !== this.state.value;
+  }
 
 
   handleSearch() {
@@ -57,21 +57,18 @@ class ACInput extends React.Component {
   render() {
     let { placeholder } = this.props;
 
-    return <div className = 'input-group'>
-      <input
-          className   = 'form-control'
-          onChange    = {this.handleChange.bind(this)}
-          onKeyDown   = {this.handleKeyDown.bind(this)}
-          placeholder = {placeholder}
-          type        = 'text'
-          value       = {this.state.value} />
-      {this.props.children}
-    </div>;
+    return <input
+        className   = {this.props.className}
+        onChange    = {this.handleChange.bind(this)}
+        onKeyDown   = {this.handleKeyDown.bind(this)}
+        placeholder = {placeholder}
+        type        = 'text'
+        value       = {this.state.value} />;
   }
 }
 
 ACInput.propTypes = {
-  children    : React.PropTypes.array,
+  className   : React.PropTypes.string,
   debounce    : React.PropTypes.number,
   onChange    : React.PropTypes.func.isRequired,
   placeholder : React.PropTypes.string,
@@ -80,7 +77,6 @@ ACInput.propTypes = {
 
 
 ACInput.defaultProps = {
-  children   : [],
   debounce   : 0,
   placeholder: ''
 };
