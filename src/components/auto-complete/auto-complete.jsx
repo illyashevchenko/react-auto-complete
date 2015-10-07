@@ -6,42 +6,19 @@ import ACInput from './auto-complete-input';
 import ACInputButton from './auto-complete-input-button';
 import ACList from './auto-complete-list';
 
-import ListStore from '../../stores/list-store';
-import ListActions from '../../actions/list-actions';
-import ResultActions from '../../actions/result-actions';
-
-
 class AutoCompleteBox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = ListStore.getState();
-
     this.errorList = [this.props.errorMsg];
     this.emptyErrorList = []; //we need this for optimization reasons
-    this.handleListChange = this.handleListChange.bind(this);
-  }
-
-
-  componentDidMount() {
-    ListStore.listen(this.handleListChange);
-  }
-
-
-  componentWillUnmount() {
-    ListStore.unlisten(this.handleListChange);
-  }
-
-
-  handleListChange(state) {
-    this.setState(state);
   }
 
 
   queryList() {
-    ListActions.fetch({
-      query: this.state.filter,
-      start: this.state.list.length,
+    this.props.actions.fetch({
+      query: this.props.filter,
+      start: this.props.list.length,
       count: this.props.itemsCount
     });
   }
@@ -70,27 +47,27 @@ class AutoCompleteBox extends React.Component {
 
 
   handleListServe(step) {
-    if (!this.state.list.length) {
+    if (!this.props.list.length) {
       return;
     }
 
-    let loadPosition = this.state.list.length - 2, //this.state.list.length - this.props.itemsCount / 2, //TODO: this formula may be changed
-        selected     = this.state.selected + step;
+    let loadPosition = this.props.list.length - 2, //this.props.list.length - this.props.itemsCount / 2, //TODO: this formula may be changed
+        selected     = this.props.selected + step;
 
 
     selected = Math.max(selected, -1);
-    selected = Math.min(selected, this.state.list.length - 1);
+    selected = Math.min(selected, this.props.list.length - 1);
 
     if (selected > loadPosition) { //TODO: If we select item we should reset that process of fetching list
       this.queryList();
     }
 
-    ListActions.serveTo(selected);
+    this.props.actions.serveTo(selected);
   }
 
 
   handleFiltering(value) {
-    if (value === this.state.filter && this.state.list.length) {
+    if (value === this.props.filter && this.props.list.length) {
       return;
     }
 
@@ -103,13 +80,13 @@ class AutoCompleteBox extends React.Component {
       };
     }
 
-    ListActions.setFilter(value, query);
+    this.props.actions.setFilter(value, query);
   }
 
 
   handleAutoComplete() {
-    if (this.state.list[0]) {
-      this.handleItemClick(this.state.list[0]);
+    if (this.props.list[0]) {
+      this.handleItemClick(this.props.list[0]);
     }
   }
 
@@ -117,10 +94,10 @@ class AutoCompleteBox extends React.Component {
   handleEnter() {
     /**
      * Pressing enter can perform two actions - start filtering (inside ACInput component) and accepting selection in the list
-     * If start filtering was accepted inside the ACInput it would clear this.state.list so item here would be undefined
+     * If start filtering was accepted inside the ACInput it would clear this.props.list so item here would be undefined
      * And so everything will work properly
      */
-    let item = this.state.list[this.state.selected]; //if the list is shown
+    let item = this.props.list[this.props.selected]; //if the list is shown
 
     if (item) {
       return this.handleItemClick(item);
@@ -129,8 +106,8 @@ class AutoCompleteBox extends React.Component {
 
 
   handleItemClick(itemValue) {
-    ListActions.setFilter(itemValue);
-    ResultActions.set(itemValue);
+    this.props.actions.setFilter(itemValue);
+    this.props.result.set(itemValue);
   }
 
 
@@ -144,38 +121,65 @@ class AutoCompleteBox extends React.Component {
             debounce    = {this.props.debounce}
             onChange    = {this.handleFiltering.bind(this)}
             placeholder = {this.props.placeholder}
-            value       = {this.state.filter} />
+            value       = {this.props.filter} />
         <ACInputButton
             className = 'glyphicon loader'
-            show      = {this.state.loading} />
+            show      = {this.props.loading} />
         <ACInputButton
             className = 'glyphicon glyphicon-search'
-            onClick   = {this.handleFiltering.bind(this, this.state.filter)}
-            show      = {!this.state.loading} />
+            onClick   = {this.handleFiltering.bind(this, this.props.filter)}
+            show      = {!this.props.loading} />
         <ACInputButton
             className = 'glyphicon glyphicon-remove'
             onClick   = {this.handleFiltering.bind(this, '')} />
       </div>
       <ACList
           itemsCount     = {this.props.itemsCount}
-          list           = {this.state.list}
+          list           = {this.props.list}
           onItemClick    = {this.handleItemClick.bind(this)}
           onScrollBottom = {this.queryList.bind(this)}
-          selected       = {this.state.selected} />
+          selected       = {this.props.selected} />
       <ACList
           itemsCount  = {1}
-          list        = {this.state.error ? this.errorList : this.emptyErrorList} />
+          list        = {this.props.error ? this.errorList : this.emptyErrorList} />
     </div>;
   }
 }
 
 
 AutoCompleteBox.propTypes = {
-  debounce   : React.PropTypes.number.isRequired,
+  actions    : React.PropTypes.shape({
+    fetch    : React.PropTypes.func.isRequired,
+    setFilter: React.PropTypes.func.isRequired,
+    serveTo  : React.PropTypes.func.isRequired
+  }),
+  debounce   : React.PropTypes.number,
+  error      : React.PropTypes.bool,
   errorMsg   : React.PropTypes.string,
+  filter     : React.PropTypes.string,
   itemsCount : React.PropTypes.number.isRequired,
-  minLetters : React.PropTypes.number.isRequired,
-  placeholder: React.PropTypes.string
+  list       : React.PropTypes.arrayOf(React.PropTypes.string),
+  loading    : React.PropTypes.bool,
+  minLetters : React.PropTypes.number,
+  placeholder: React.PropTypes.string,
+  result     : React.PropTypes.shape({
+    set: React.PropTypes.func.isRequired
+  }),
+  selected: React.PropTypes.number
 };
+
+
+AutoCompleteBox.defaultProps = {
+  debounce   : 0,
+  error      : false,
+  errorMsg   : 'Error!',
+  filter     : '',
+  list       : [],
+  loading    : false,
+  minLetters : 2,
+  placeholder: 'Type something...',
+  selected   : -1
+};
+
 
 export default AutoCompleteBox;
