@@ -43,7 +43,7 @@ class ACList extends React.Component {
     let selectedNode = React.findDOMNode(this.refs[`item${this.props.selected}`]),
         node         = React.findDOMNode(this);
 
-    node.scrollTop = selectedNode.offsetTop - node.offsetHeight / 2;
+    node.scrollTop = selectedNode.offsetTop - node.clientHeight / 2;
   }
 
 
@@ -53,9 +53,9 @@ class ACList extends React.Component {
     }
 
     let list   = React.findDOMNode(this),
-        endTop = list.offsetHeight - list.clientHeight;
+        endTop = list.scrollHeight - list.clientHeight;
 
-    if (endTop > list.offsetTop) {
+    if (endTop > list.scrollTop) {
       return;
     }
 
