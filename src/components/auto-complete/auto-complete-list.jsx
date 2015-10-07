@@ -4,9 +4,14 @@
 import React from 'react';
 import ACListItem from './auto-complete-list-item';
 import classNames from 'classnames';
-
+import { isArrayChanged } from '../../helpers/equals';
 
 class ACList extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.selected !== this.props.selected || isArrayChanged(nextProps.list, this.props.list);
+  }
+
+
   componentDidUpdate() {
     this.setHeight();
     this.scrollList();

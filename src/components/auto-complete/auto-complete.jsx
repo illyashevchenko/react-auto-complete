@@ -21,6 +21,7 @@ class AutoCompleteBox extends React.Component {
     });
 
     this.errorList = [this.props.error];
+    this.emptyErrorList = []; //we need this for optimization reasons
     this.handleListChange = this.handleListChange.bind(this);
   }
 
@@ -175,7 +176,7 @@ class AutoCompleteBox extends React.Component {
           selected       = {this.state.selected} />
       <ACList
           itemsCount  = {1}
-          list        = {this.state.error ? this.errorList : []} />
+          list        = {this.state.error ? this.errorList : this.emptyErrorList} />
     </div>;
   }
 }

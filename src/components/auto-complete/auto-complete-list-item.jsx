@@ -3,11 +3,11 @@
  */
 import React from 'react';
 import classNames from 'classnames';
-
+import { hasEqualProps } from '../../helpers/equals';
 
 class ACListItem extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.selected !== this.props.selected || nextProps.text !== this.props.text;
+    return !hasEqualProps(['text', 'selected'], nextProps, this.props);
   }
 
 

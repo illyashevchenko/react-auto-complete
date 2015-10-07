@@ -3,10 +3,11 @@
  */
 import React from 'react';
 import classNames from 'classnames';
+import { hasEqualProps } from '../../helpers/equals';
 
 class ACInputButton extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.show !== this.props.show || nextProps.className !== this.props.className;
+    return !hasEqualProps(['show', 'className'], nextProps, this.props);
   }
 
 
