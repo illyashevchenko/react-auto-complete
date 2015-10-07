@@ -10,7 +10,6 @@ class ACInputButton extends React.Component {
     return !hasEqualProps(['show', 'className'], nextProps, this.props);
   }
 
-
   render() {
     let { onClick = () => {}, className, show } = this.props;
 

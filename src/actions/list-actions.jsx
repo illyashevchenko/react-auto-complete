@@ -14,8 +14,15 @@ class ListActions {
   fetch({ query, start, count }) {
     this.dispatch();
 
-    listSource.fetch(query, start, count)
-        .then(this.actions.update.bind(this))
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = listSource.fetch(query, start, count)
+        .then((list) => {
+          this.actions.update(list);
+          this.loading = null;
+        })
         .catch(this.actions.error.bind(this));
   }
 
@@ -25,8 +32,21 @@ class ListActions {
   }
 
 
-  clear() {
-    this.dispatch();
+  serveTo(itemNumber) {
+    this.dispatch(itemNumber);
+  }
+
+
+  setFilter(value, loading = false) {
+    this.dispatch(value);
+
+    if (!loading) {
+      return;
+    }
+
+    this.actions.fetch(Object.assign(loading, {
+      query: value
+    }));
   }
 }
 

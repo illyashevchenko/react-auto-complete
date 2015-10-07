@@ -7,15 +7,18 @@ import ListActions from '../actions/list-actions';
 
 class ListStore {
   constructor() {
-    this.loading = false;
-    this.list    = [];
-    this.error   = false;
+    this.loading  = false;
+    this.list     = [];
+    this.error    = false;
+    this.selected = -1;
+    this.filter   = '';
 
     this.bindListeners({
-      handleFetch : ListActions.FETCH,
-      handleUpdate: ListActions.UPDATE,
-      handleError : ListActions.ERROR,
-      handleClear : ListActions.CLEAR
+      handleFetch  : ListActions.FETCH,
+      handleUpdate : ListActions.UPDATE,
+      handleError  : ListActions.ERROR,
+      handleFilter : ListActions.SET_FILTER,
+      handleServing: ListActions.SERVE_TO
     });
   }
 
@@ -42,10 +45,17 @@ class ListStore {
   }
 
 
-  handleClear() {
-    this.loading = false;
-    this.list = [];
-    this.error = false;
+  handleFilter(value) {
+    this.loading  = false;
+    this.list     = [];
+    this.error    = false;
+    this.selected = -1;
+    this.filter   = value;
+  }
+
+
+  handleServing(itemNumber) {
+    this.selected = itemNumber;
   }
 }
 

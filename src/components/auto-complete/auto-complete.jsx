@@ -15,10 +15,7 @@ class AutoCompleteBox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = Object.assign(ListStore.getState(), {
-      selected: -1,
-      filter  : ''
-    });
+    this.state = ListStore.getState();
 
     this.errorList = [this.props.errorMsg];
     this.emptyErrorList = []; //we need this for optimization reasons
@@ -42,10 +39,6 @@ class AutoCompleteBox extends React.Component {
 
 
   queryList() {
-    if (this.state.loading) {
-      return;
-    }
-
     ListActions.fetch({
       query: this.state.filter,
       start: this.state.list.length,
@@ -92,26 +85,18 @@ class AutoCompleteBox extends React.Component {
       this.queryList();
     }
 
-    this.setState({
-      selected: selected
-    });
+    ListActions.serveTo(selected);
   }
 
 
   handleFiltering(value) {
-    if (value === this.state.filter) {
+    if (value === this.state.filter && this.state.list.length) {
       return;
     }
 
-    ListActions.clear();
-
-    this.setState({
-      filter  : value,
-      selected: -1
-    }, () => {
-      if (value.length >= this.props.minLetters) {
-        this.queryList();
-      }
+    ListActions.setFilter(value, {
+      start: 0,
+      count: this.props.itemsCount
     });
   }
 
@@ -138,12 +123,7 @@ class AutoCompleteBox extends React.Component {
 
 
   handleItemClick(itemValue) {
-    this.setState({
-      filter  : itemValue,
-      selected: -1
-    });
-
-    ListActions.clear();
+    ListActions.setFilter(itemValue);
     ResultActions.set(itemValue);
   }
 
@@ -164,7 +144,7 @@ class AutoCompleteBox extends React.Component {
             show      = {this.state.loading} />
         <ACInputButton
             className = 'glyphicon glyphicon-search'
-            onClick   = {this.handleFiltering.bind(this)}
+            onClick   = {this.handleFiltering.bind(this, this.state.filter)}
             show      = {!this.state.loading} />
         <ACInputButton
             className = 'glyphicon glyphicon-remove'
