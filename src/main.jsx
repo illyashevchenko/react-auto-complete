@@ -23,7 +23,7 @@ React.render(
 React.render(
     <AutoCompleteBox
         debounce    = {2000}
-        error       = 'Sorry, could not find anything'
+        errorMsg    = 'Sorry, could not find anything'
         itemsCount  = {5}
         minLetters  = {2}
         placeholder = 'Start typing...'/>,

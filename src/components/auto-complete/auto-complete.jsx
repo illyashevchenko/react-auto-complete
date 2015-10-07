@@ -20,7 +20,7 @@ class AutoCompleteBox extends React.Component {
       filter  : ''
     });
 
-    this.errorList = [this.props.error];
+    this.errorList = [this.props.errorMsg];
     this.emptyErrorList = []; //we need this for optimization reasons
     this.handleListChange = this.handleListChange.bind(this);
   }
@@ -186,7 +186,7 @@ class AutoCompleteBox extends React.Component {
 
 AutoCompleteBox.propTypes = {
   debounce   : React.PropTypes.number.isRequired,
-  error      : React.PropTypes.string,
+  errorMsg   : React.PropTypes.string,
   itemsCount : React.PropTypes.number.isRequired,
   minLetters : React.PropTypes.number.isRequired,
   placeholder: React.PropTypes.string
