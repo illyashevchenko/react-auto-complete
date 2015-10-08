@@ -16,7 +16,6 @@
     "eslint": "^1.6.0",
     "eslint-plugin-react": "^3.5.1",
     "html-webpack-plugin": "^1.6.1",
-    "react-tools": "^0.13.3",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
   },
