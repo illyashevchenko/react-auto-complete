@@ -7,8 +7,9 @@ import ListActions from '../actions/list-actions';
 
 class ListStore {
   constructor() {
+    this._emptyList = [];
     this.loading  = false;
-    this.list     = [];
+    this.list     = this._emptyList;
     this.error    = false;
     this.selected = -1;
     this.filter   = '';
@@ -66,7 +67,7 @@ class ListStore {
       this.preventNearestUpdate = true;
     }
 
-    this.list     = [];
+    this.list     = this._emptyList;
     this.error    = false;
     this.selected = -1;
     this.filter   = value;
