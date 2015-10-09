@@ -13,9 +13,14 @@ module.exports = function (config) {
     webpack: {
       module: {
         loaders: [{
-          test: /\.(js|jsx)$/, exclude: /(bower_components|node_modules)/,
+          test: /\.jsx$/,
+          exclude: /(bower_components|node_modules)/,
           loader: 'babel-loader'
         }]
+      },
+      resolve: {
+        extensions: ['', '.jsx', '.js'],
+        modulesDirectories: ['node_modules', 'src']
       }
     },
     webpackMiddleware: { noInfo: true }

@@ -3,22 +3,11 @@
  */
 import { expect } from 'chai';
 
+import React from 'react';
+import ACListItem from './auto-complete-list-item';
+
 describe('Test', () => {
   it('should be true', () => {
     expect(true).to.equal(true);
   });
 });
-
-
-//require('testdom')('<html><body></body></html>');
-//require('react');
-//
-//var chai   = require('chai'),
-//    expect = chai.expect,
-//    AutoCompleteListItem = require('./auto-complete-list-item.jsx');
-//
-//describe('Test', () => {
-//    it('should be true', () => {
-//      expect(true).to.equal(true);
-//    });
-//});
