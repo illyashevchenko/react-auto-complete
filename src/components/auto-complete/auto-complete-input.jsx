@@ -6,6 +6,15 @@ import _ from 'underscore';
 
 
 class ACInput extends React.Component {
+  /**
+   * Input with ability to debounce changing and force changing when enter is pressed
+   * @param {Object} props Component properties
+   * @param {string} [props.className] Class name for input element
+   * @param {number} [props.debounce = 0] Debounce delay in milliseconds
+   * @param {Function} props.onChange On change handler. String value is passed as a parameter
+   * @param {string} [props.placeholder = ''] Placeholder for input
+   * @param {string} [props.value]
+   */
   constructor(props) {
     super(props);
 
@@ -13,10 +22,17 @@ class ACInput extends React.Component {
       value: ''
     };
 
+    /**
+     * @type {Function} Debounced handler
+     */
     this.handleSearchDebounce = _.debounce(this.handleSearch.bind(this), props.debounce);
   }
 
 
+  /**
+   * Process value from props to state if it differs from current (is set from outside)
+   * @param {Object} props New props
+   */
   componentWillReceiveProps(props) {
     if (props.value !== this.props.value) {
       this.setState({
@@ -26,16 +42,29 @@ class ACInput extends React.Component {
   }
 
 
+  /**
+   * Need for optimization - we should re-render component only if the value on state was changed
+   * @param {Object} nextProps New props
+   * @param {Object} nextState New state
+   * @returns {boolean} true if component should be updated
+   */
   shouldComponentUpdate(nextProps, nextState) {
     return nextState.value !== this.state.value;
   }
 
 
+  /**
+   * Handles search. Calls onChange callback
+   */
   handleSearch() {
     this.props.onChange(this.state.value);
   }
 
 
+  /**
+   * Handles onChange
+   * @param {Event} event Event object
+   */
   handleChange(event) {
     this.setState({
       value: event.target.value
@@ -45,6 +74,10 @@ class ACInput extends React.Component {
   }
 
 
+  /**
+   * Handles keydown. If 'enter' is pressed - forces searching without debounce
+   * @param {Event} event Event object
+   */
   handleKeyDown(event) {
     let keyCode = event.keyCode || event.which;
 
@@ -54,6 +87,10 @@ class ACInput extends React.Component {
   }
 
 
+  /**
+   * Renders component
+   * @returns {XML}
+   */
   render() {
     let { placeholder } = this.props;
 

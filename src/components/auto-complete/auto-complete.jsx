@@ -5,8 +5,65 @@ import React from 'react';
 import ACInput from './auto-complete-input';
 import ACInputButton from './auto-complete-input-button';
 import ACList from './auto-complete-list';
+/**
+ * @typedef {Function} ListAction~query
+ * @param {Object} params Query params
+ * @param {string} params.query Query string
+ * @param {number} params.start Start position to fetch from
+ * @param {number} params.count Count of items to fetch
+ */
 
+/**
+ * @typedef {Function} ListAction~setFilters
+ * @param {string} value Value to set
+ * @param {Object} [query] Query parameters. If omitted - query is not required
+ * @param {number} [query.start] Start position to fetch from
+ * @param {number} [query.count] Count of items to fetch
+ */
+
+/**
+ * @typedef {Function} ListAction~serveTo
+ * @param {number} selected Index of item to be served to
+ */
+
+/**
+ * @typedef {Function} ResultAction~set
+ * @param {string} result Value ot set as the result
+ */
 class AutoCompleteBox extends React.Component {
+  /**
+   * Auto-complete component with input and list of items.
+   * <b>Provides:</b>
+   * <ol>
+   *   <li>Debounce on input change</li>
+   *   <li>Minimum letters to start search</li>
+   *   <li>Keyboard list control (up and down for serving, right for auto-complete, enter for select</li>
+   *   <li>Infinite scroll (lazy load) of the list -
+   *     if served with keyboard or scrolled with the mouse to the bottom
+   *     it loads next amount of items
+   *   </li>
+   * </ol>
+   *
+   * @param {Object} props Component properties
+   * @param {Object} props.actions Actions for list
+   * @param {ListAction~query} props.actions.fetch Handler to fetch items
+   * @param {ListAction~setFilters} props.actions.setFilters Handler to set filter and fetch items
+   * @param {ListAction~serveTo} props.actions.serveTo Handler to set current served to item
+   * @param {Object} props.result Actions for result of searching
+   * @param {ResultAction~set} props.result.set Action to set the result.
+   * @param {number} [props.debounce = 0] Debounce for input typing
+   * @param {boolean} [props.error = false] Flag to show error message
+   * @param {string} [props.errorMsg = 'Error!'] Error message text
+   * @param {string} [props.filter = ''] Current filter string
+   * @param {number} props.itemsCount Items count.
+   * Component queries this count of items during one query.
+   * Also it is treated as 'window height' to the list. So this amount of items will be visible at list
+   * @param {Array.<string>} [props.list = []] List of items (search result)
+   * @param {boolean} [props.loading = false] Flag to show loading spinner
+   * @param {number} [props.minLetters = 2] Count of letters from which searching will be started
+   * @param {string} [props.placeholder = 'Type something...'] Placeholder for input
+   * @param {number} [props.selected = -1] Number of currently selected list item (used for keyboard serving purposes)
+   */
   constructor(props) {
     super(props);
 
