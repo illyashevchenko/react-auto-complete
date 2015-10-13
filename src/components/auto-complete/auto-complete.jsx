@@ -10,11 +10,23 @@ class AutoCompleteBox extends React.Component {
   constructor(props) {
     super(props);
 
+    /**
+     * This is used to have one source and to be able to prevent re-rendering child components
+     * @type {[]}
+     */
     this.errorList = [this.props.errorMsg];
-    this.emptyErrorList = []; //we need this for optimization reasons
+
+    /**
+     * This is used to have one source and to be able to prevent re-rendering child components
+     * @type {[]}
+     */
+    this.emptyErrorList = [];
   }
 
 
+  /**
+   * Calls 'fetch' action with parameters to fetch next 'itemsCount' elements of the list with filter value
+   */
   queryList() {
     this.props.actions.fetch({
       query: this.props.filter,
@@ -24,6 +36,10 @@ class AutoCompleteBox extends React.Component {
   }
 
 
+  /**
+   * Handles keydown on input. Calls appropriate handlers depending on event.keyCode or event.which
+   * @param {Event} event
+   */
   handleKeyDown(event) {
     let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter
 
@@ -46,6 +62,12 @@ class AutoCompleteBox extends React.Component {
   }
 
 
+  /**
+   * Handler for serving the list. Usually for keyboard serving.
+   * Selects from -1 position till the last.
+   * Calls 'serveTo' action if the end of list was reached
+   * @param {Number} step Step for list serving. 1 to jump one item down, -1 to jump one item update
+   */
   handleListServe(step) {
     if (!this.props.list.length) {
       return;
@@ -66,6 +88,12 @@ class AutoCompleteBox extends React.Component {
   }
 
 
+  /**
+   * Handler for filtering.
+   * Does nothing if value equals current filter or list is full filled.
+   * Calls 'setFilter' action
+   * @param {String} value New filter value.
+   */
   handleFiltering(value) {
     if (value === this.props.filter && this.props.list.length) {
       return;
@@ -84,6 +112,9 @@ class AutoCompleteBox extends React.Component {
   }
 
 
+  /**
+   * Handles auto complete - simulates item click on the first list item
+   */
   handleAutoComplete() {
     if (this.props.list[0]) {
       this.handleItemClick(this.props.list[0]);
@@ -91,26 +122,37 @@ class AutoCompleteBox extends React.Component {
   }
 
 
+  /**
+   * Handles enter pressing on list item
+   *
+   * Pressing enter can perform two actions - start filtering (inside ACInput component) and accepting selection in the list
+   * If start filtering was accepted inside the ACInput it would clear this.props.list so item here would be undefined
+   * And so everything will work properly
+   */
   handleEnter() {
-    /**
-     * Pressing enter can perform two actions - start filtering (inside ACInput component) and accepting selection in the list
-     * If start filtering was accepted inside the ACInput it would clear this.props.list so item here would be undefined
-     * And so everything will work properly
-     */
-    let item = this.props.list[this.props.selected]; //if the list is shown
+    let item = this.props.list[this.props.selected];
 
     if (item) {
-      return this.handleItemClick(item);
+      this.handleItemClick(item);
     }
   }
 
 
+  /**
+   * Handles item click.
+   * Calls 'setFilter' action and 'set.result' action
+   * @param {String} itemValue current clicked item
+   */
   handleItemClick(itemValue) {
     this.props.actions.setFilter(itemValue);
     this.props.result.set(itemValue);
   }
 
 
+  /**
+   * Renders component
+   * @returns {XML}
+   */
   render() {
     return <div
         className = 'dropdown'

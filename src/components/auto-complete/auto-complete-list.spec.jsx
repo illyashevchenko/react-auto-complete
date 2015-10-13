@@ -13,19 +13,6 @@ describe('ACList', () => {
     itemsCount: 3
   };
 
-  //beforeEach(() => {
-  //  revert = ACList.__set__('ACListItem', ACListItemMock);
-  //});
-
-
-  //afterEach(() => {
-  //  revert();
-  //});
-
-
-  //it('should be true', () => {
-  //  return expect(true).to.be.true && expect(false).to.be.false;
-  //});
 
   describe('List items', () => {
     it('should render proper list items count', () => {
