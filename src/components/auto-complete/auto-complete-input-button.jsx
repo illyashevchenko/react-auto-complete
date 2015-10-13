@@ -5,16 +5,33 @@ import React from 'react';
 import classNames from 'classnames';
 import { hasEqualProps } from '../../helpers/equals';
 
+/**
+ * Input button (placed near input component) component
+ * @param {Object} props Component properties
+ * @param {string} [props.className = ''] Class name for root element
+ * @param {Function} [props.onClick = () => {}] Handler for clicking on the button
+ * @param {boolean} [props.show = true] Flag to show the button
+ */
 class ACInputButton extends React.Component {
+  /**
+   * Need for optimization - we should re-render component only if the show or className props were changed
+   * @param {Object} nextProps New props
+   * @returns {boolean} true if component should be updated
+   */
   shouldComponentUpdate(nextProps) {
     return !hasEqualProps(['show', 'className'], nextProps, this.props);
   }
 
+
+  /**
+   * Renders component
+   * @returns {XML}
+   */
   render() {
     let { onClick = () => {}, className, show } = this.props;
 
     let containerClassName = classNames('input-group-btn', { //use the second let, because IDE resists to catch syntax when one using one let
-      hide: typeof show === 'boolean' && !show
+      hide: !show
     });
 
     return <span
@@ -37,8 +54,9 @@ ACInputButton.propTypes = {
 
 
 ACInputButton.defaultProps = {
-  //show   : true,
-  onClick: () => {}
+  className: '',
+  show     : true,
+  onClick  : () => {}
 };
 
 
