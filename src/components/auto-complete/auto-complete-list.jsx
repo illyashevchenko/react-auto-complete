@@ -6,18 +6,44 @@ import ACListItem from './auto-complete-list-item';
 import classNames from 'classnames';
 import { isArrayChanged } from '../../helpers/equals';
 
+
+/**
+ * List component
+ * @param {Object} props Component properties
+ * @param {number} props.itemsCount Count of items
+ * Component queries this count of items during one query.
+ * Also it is treated as 'window height' to the list. So this amount of items will be visible at list
+ * @param {Array.<string>} props.list List of items to render
+ * @param {Function} [props.onItemClick = () => {}] Handler for item click. Passes value as a string parameter
+ * @param {Function} [props.onScrollBottom = () => {}] Handler when bottom is reached on scrolling
+ * @param {number} [props.selected = -1] Currently selected item number
+ */
 class ACList extends React.Component {
+  /**
+   * Need for optimization - we should re-render component only if the selected or list array props were changed.
+   *
+   * @param {Object} nextProps New props
+   * @returns {boolean} true if component should be updated
+   */
   shouldComponentUpdate(nextProps) {
     return nextProps.selected !== this.props.selected || isArrayChanged(nextProps.list, this.props.list);
   }
 
 
+  /**
+   * Handles component was updated
+   */
   componentDidUpdate() {
     this.setHeight();
     this.scrollList();
   }
 
 
+  /**
+   * Set height of the list. Gets the first element, calculates its height
+   * Then sets height of the list as 'itemsCount' x 'itemHeight'
+   * Takes into consideration border and padding
+   */
   setHeight() {
     if (!this.props.list.length || !this.refs.item0) {
       return;
@@ -35,6 +61,9 @@ class ACList extends React.Component {
   }
 
 
+  /**
+   * Scrolls list ot currently selected item number.
+   */
   scrollList() {
     if (!this.props.list.length || this.props.selected < 0) {
       return;
@@ -47,6 +76,11 @@ class ACList extends React.Component {
   }
 
 
+  /**
+   * Handle mouse scroll on the list.
+   * Sets scrollTop position and calls onScrollBottom handler if bottom is reached
+   * @param {WheelEvent} event Event
+   */
   handleScroll(event) {
     if (event.deltaY <= 0) {
       return;
@@ -63,6 +97,10 @@ class ACList extends React.Component {
   }
 
 
+  /**
+   * Renders component
+   * @returns {XML}
+   */
   render() {
     let listItemNodes = this.props.list.map((listItem, index) => {
           return <ACListItem
@@ -94,8 +132,9 @@ ACList.propTypes = {
 
 
 ACList.defaultProps = {
-  selected   : -1,
-  onItemClick: () => {}
+  selected      : -1,
+  onItemClick   : () => {},
+  onScrollBottom: () => {}
 };
 
 
