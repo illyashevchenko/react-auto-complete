@@ -33,6 +33,8 @@
     "phantomjs-polyfill": "0.0.1",
     "react-addons-test-utils": "^0.14.0",
     "react-hot-loader": "^1.3.0",
+    "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
+    "sinon-chai": "^2.8.0",
     "style-loader": "^0.12.4",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
