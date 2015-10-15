@@ -54,4 +54,44 @@ describe('ACListItem', () => {
     TestUtils.Simulate.click(container);
     return expect(spy).to.have.been.calledOnce;
   });
+
+  describe('should component update', function () {
+    let component = render(ACListItem, {}, defaultProps);
+
+
+    it('should allow to update component if text property was changed', () => {
+      let shouldUpdate = component.shouldComponentUpdate({
+        text: 'new'
+      });
+
+      return expect(shouldUpdate).to.be.true;
+    });
+
+
+    it('should disallow to update component if text property was not changed', () => {
+      let shouldUpdate = component.shouldComponentUpdate({
+        text: ''
+      });
+
+      return expect(shouldUpdate).to.be.false;
+    });
+
+
+    it('should allow to update component if selected property was changed', () => {
+      let shouldUpdate = component.shouldComponentUpdate({
+        selected: true
+      });
+
+      return expect(shouldUpdate).to.be.true;
+    });
+
+
+    it('should disallow to update component if selected property was not changed', () => {
+      let shouldUpdate = component.shouldComponentUpdate({
+        selected: false
+      });
+
+      return expect(shouldUpdate).to.be.false;
+    });
+  });
 });

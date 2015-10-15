@@ -8,11 +8,15 @@ import ACList from './auto-complete-list';
 import ACListItem from './auto-complete-list-item';
 
 describe('ACList', () => {
-  let defaultProps = {
-    list      : ['foo', 'bar', 'barry'],
-    itemsCount: 3
-  };
+  let list = ['foo', 'bar', 'barry'],
+      defaultProps = {
+        list      : list,
+        itemsCount: 3
+      };
 
+  beforeEach(() => {
+    document.body.innerHTML = '';
+  });
 
   describe('List items', () => {
     it('should render proper list items count', () => {
@@ -61,6 +65,60 @@ describe('ACList', () => {
 
       items.forEach((item) => { item.props.onClick(); });
       expect(handler.callCount).to.equal(3);
+    });
+  });
+
+
+  describe('should component update', function () {
+    let component = render(ACList, {
+          selected: 0
+        }, defaultProps);
+
+
+    it('should allow to update component if selected property was changed', () => {
+      let shouldUpdate = component.shouldComponentUpdate({
+        selected: 1
+      });
+
+      return expect(shouldUpdate).to.be.true;
+    });
+
+
+    it('should disallow to update component if selected property was not changed', () => {
+      let shouldUpdate = component.shouldComponentUpdate({
+        selected: 0
+      });
+
+      return expect(shouldUpdate).to.be.false;
+    });
+
+
+    it('should allow to update component if list property was changed', () => {
+      let shouldUpdate = component.shouldComponentUpdate({
+        list: []
+      });
+
+      return expect(shouldUpdate).to.be.true;
+    });
+
+
+    it('should allow to update component if list length property was changed', () => {
+      list.push('test');
+
+      let shouldUpdate = component.shouldComponentUpdate({
+        list: list
+      });
+
+      return expect(shouldUpdate).to.be.true;
+    });
+
+
+    it('should disallow to update component if list property was not changed', () => {
+      let shouldUpdate = component.shouldComponentUpdate({
+        list: list
+      });
+
+      return expect(shouldUpdate).to.be.false;
     });
   });
 });
