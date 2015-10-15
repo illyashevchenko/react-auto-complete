@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import _ from 'underscore';
+import { hasEqualProps } from '../../helpers/equals';
 
 
 class ACInput extends React.Component {
@@ -49,7 +50,7 @@ class ACInput extends React.Component {
    * @returns {boolean} true if component should be updated
    */
   shouldComponentUpdate(nextProps, nextState) {
-    return nextState.value !== this.state.value;
+    return !hasEqualProps(['value'], nextState, this.state);
   }
 
 
