@@ -8,9 +8,8 @@ import ACList from './auto-complete-list';
 import ACListItem from './auto-complete-list-item';
 
 describe('ACList', () => {
-  let list = ['foo', 'bar', 'barry'],
-      defaultProps = {
-        list      : list,
+  let defaultProps = {
+        list      : ['foo', 'bar', 'barry'],
         itemsCount: 3
       };
 
@@ -70,14 +69,22 @@ describe('ACList', () => {
 
 
   describe('should component update', function () {
-    let component = render(ACList, {
-          selected: 0
-        }, defaultProps);
+    let list = ['foo', 'bar', 'barry'],
+        component;
 
 
-    it('should allow to update component if selected property was changed', () => {
+    beforeEach(() => {
+      component = render(ACList, {
+        selected: 0,
+        list    : list
+      }, defaultProps);
+    });
+
+
+    it('should allow to update compoanent if selected property was changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        selected: 1
+        selected: 1,
+        list    : list
       });
 
       return expect(shouldUpdate).to.be.true;
@@ -86,7 +93,8 @@ describe('ACList', () => {
 
     it('should disallow to update component if selected property was not changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        selected: 0
+        selected: 0,
+        list    : list
       });
 
       return expect(shouldUpdate).to.be.false;
@@ -95,7 +103,8 @@ describe('ACList', () => {
 
     it('should allow to update component if list property was changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        list: []
+        selected: 0,
+        list    : []
       });
 
       return expect(shouldUpdate).to.be.true;
@@ -106,7 +115,8 @@ describe('ACList', () => {
       list.push('test');
 
       let shouldUpdate = component.shouldComponentUpdate({
-        list: list
+        selected: 0,
+        list    : list
       });
 
       return expect(shouldUpdate).to.be.true;
@@ -115,7 +125,8 @@ describe('ACList', () => {
 
     it('should disallow to update component if list property was not changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        list: list
+        selected: 0,
+        list    : list
       });
 
       return expect(shouldUpdate).to.be.false;

@@ -58,12 +58,16 @@ describe('ACInputButton', () => {
 
   
   describe('should component update', function () {
-    let component = render(ACInputButton, {}, defaultProps);
+    let component = render(ACInputButton, {
+      className: 'foo-bar',
+      show     : true
+    }, defaultProps);
 
 
     it('should allow to update component if className property was changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        className: 'new'
+        className: 'new',
+        show     : true
       });
 
       return expect(shouldUpdate).to.be.true;
@@ -72,7 +76,8 @@ describe('ACInputButton', () => {
 
     it('should disallow to update component if className property was not changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        className: 'foo-bar'
+        className: 'foo-bar',
+        show     : true
       });
 
       return expect(shouldUpdate).to.be.false;
@@ -81,7 +86,8 @@ describe('ACInputButton', () => {
 
     it('should allow to update component if show property was changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        show: false
+        className: 'foo-bar',
+        show     : false
       });
 
       return expect(shouldUpdate).to.be.true;
@@ -90,7 +96,8 @@ describe('ACInputButton', () => {
 
     it('should disallow to update component if show property was not changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        show: true
+        className: 'foo-bar',
+        show     : true
       });
 
       return expect(shouldUpdate).to.be.false;

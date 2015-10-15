@@ -56,12 +56,16 @@ describe('ACListItem', () => {
   });
 
   describe('should component update', function () {
-    let component = render(ACListItem, {}, defaultProps);
+    let component = render(ACListItem, {
+      selected: false,
+      text    : ''
+    }, defaultProps);
 
 
     it('should allow to update component if text property was changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        text: 'new'
+        selected: false,
+        text    : 'new'
       });
 
       return expect(shouldUpdate).to.be.true;
@@ -70,7 +74,8 @@ describe('ACListItem', () => {
 
     it('should disallow to update component if text property was not changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        text: ''
+        selected: false,
+        text    : ''
       });
 
       return expect(shouldUpdate).to.be.false;
@@ -79,7 +84,8 @@ describe('ACListItem', () => {
 
     it('should allow to update component if selected property was changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        selected: true
+        selected: true,
+        text    : ''
       });
 
       return expect(shouldUpdate).to.be.true;
@@ -88,7 +94,8 @@ describe('ACListItem', () => {
 
     it('should disallow to update component if selected property was not changed', () => {
       let shouldUpdate = component.shouldComponentUpdate({
-        selected: false
+        selected: false,
+        text    : ''
       });
 
       return expect(shouldUpdate).to.be.false;

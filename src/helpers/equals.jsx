@@ -4,11 +4,10 @@
 
 export function hasEqualProps(props, firstObj, secondObj) {
   return props.every((prop) => !firstObj.hasOwnProperty(prop)
-                            || !secondObj.hasOwnProperty(prop)
                             ||  firstObj[prop] === secondObj[prop]);
 }
 
 
-export function isArrayChanged(firstArray, secondArray) {
-  return typeof firstArray !== 'undefined' && firstArray !== secondArray;
+export function isArrayChanged(firstArray, secondArray, oldLength) {
+  return typeof firstArray !== 'undefined' && (firstArray !== secondArray || firstArray.length !== oldLength);
 }

@@ -26,7 +26,8 @@ class ACList extends React.Component {
    * @returns {boolean} true if component should be updated
    */
   shouldComponentUpdate(nextProps) {
-    return !hasEqualProps(['selected'], nextProps, this.props) || isArrayChanged(nextProps.list, this.props.list);
+    return !hasEqualProps(['selected'], nextProps, this.props)
+         || isArrayChanged(nextProps.list, this.props.list, this.listLength);
   }
 
 
@@ -114,6 +115,7 @@ class ACList extends React.Component {
           show: this.props.list.length
         });
 
+    this.listLength = this.props.list.length;
     return  <ul
         className = {className}
         onWheel   = {this.handleScroll.bind(this)}>
