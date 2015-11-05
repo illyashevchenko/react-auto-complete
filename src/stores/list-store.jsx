@@ -58,15 +58,6 @@ class ListStore {
 
 
   handleFilter(value) {
-    if (this.loading) {
-      /**
-       * if something is loaded and new filter selected (or item selected which is the same here)
-       * need to prevent next update and reset loading flag
-       */
-      this.loading = false;
-      this.preventNearestUpdate = true;
-    }
-
     this.list     = this._emptyList;
     this.error    = false;
     this.selected = -1;

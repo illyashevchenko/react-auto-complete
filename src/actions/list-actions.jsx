@@ -30,16 +30,8 @@ class ListActions {
   }
 
 
-  setFilter(value, loading = false) {
+  setFilter(value) {
     this.dispatch(value);
-
-    if (!loading) {
-      return;
-    }
-
-    this.actions.fetch(Object.assign(loading, {
-      query: value
-    }));
   }
 }
 
