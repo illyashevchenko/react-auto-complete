@@ -13,6 +13,7 @@ class ListStore {
     this.error    = false;
     this.selected = -1;
     this.filter   = '';
+    this.preventNearestUpdates = 0;
 
     this.bindListeners({
       handleFetch  : ListActions.FETCH,
@@ -25,11 +26,7 @@ class ListStore {
 
 
   handleFetch () {
-    /**
-     * this flag can be set previously with reset loading flag,
-     * but we still need prevent double update
-     */
-    this.preventNearestUpdate = this.preventNearestUpdate || this.loading;
+    this.preventNearestUpdates += +this.loading;
 
     this.loading = true;
     this.error   = false;
@@ -37,8 +34,8 @@ class ListStore {
 
 
   handleUpdate (list) {
-    if (this.preventNearestUpdate) {
-      this.preventNearestUpdate = null;
+    if (this.preventNearestUpdates) {
+      --this.preventNearestUpdates;
       return;
     }
 
@@ -52,21 +49,13 @@ class ListStore {
 
 
   handleError () {
+    this.preventNearestUpdates = 0;
     this.loading = false;
     this.error   = true;
   }
 
 
   handleFilter (value) {
-    if (this.loading) {
-      /**
-       * if something is loaded and new filter selected (or item selected which is the same here)
-       * need to prevent next update and reset loading flag
-       */
-      this.loading = false;
-      this.preventNearestUpdate = true;
-    }
-
     this.list     = this._emptyList;
     this.error    = false;
     this.selected = -1;
