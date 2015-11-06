@@ -2,8 +2,8 @@
  * Created by Illia_Shevchenko on 05.10.2015.
  */
 
-/*eslint-disable quotes, quote-props */
-let mockData = [
+/* eslint-disable quotes, quote-props */
+const mockData = [
   {
     "registered": "Thursday, July 2, 2015 6:51 AM",
     "firstName": "Montoya",
@@ -293,21 +293,21 @@ let mockData = [
     "index": 18
   }
 ];
-/*eslint-enable quotes, quote-props */
+/* eslint-enable quotes, quote-props */
 
 
 export default {
   fetch: function (query, start, count) {
-    query = query.toUpperCase();
+    const queryUpperCase = query.toUpperCase();
 
     return new Promise(function (resolve) {
       setTimeout(() => {
-        let data = mockData
-            .filter((item) => item.firstName.toUpperCase().includes(query))
+        const data = mockData
+            .filter((item) => item.firstName.toUpperCase().includes(queryUpperCase))
             .slice(start, start + count);
 
         resolve(data);
-      }, 1000);
+      }, 5000);
     });
   }
 };

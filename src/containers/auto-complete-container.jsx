@@ -11,12 +11,12 @@ import ResultActions from '../actions/result-actions';
 
 
 class Container extends React.Component {
-  render() {
-    return <AltContainer
+  render () {
+    return (<AltContainer
         actions = {{ actions: ListActions, result: ResultActions }}
         store = {ListStore} >
       <AutoComplete {...this.props}/>
-    </AltContainer>;
+    </AltContainer>);
   }
 }
 

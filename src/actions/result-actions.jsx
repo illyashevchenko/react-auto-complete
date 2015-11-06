@@ -5,7 +5,7 @@ import alt from '../alt-start';
 
 
 class ResultActions {
-  set(result) {
+  set (result) {
     this.dispatch(result);
   }
 }

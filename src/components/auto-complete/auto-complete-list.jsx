@@ -2,6 +2,7 @@
  * Created by Illia_Shevchenko on 28.09.2015.
  */
 import React from 'react';
+import ReactDom from 'react-dom'; // require('react-dom')
 import ACListItem from './auto-complete-list-item';
 import classNames from 'classnames';
 import { hasEqualProps, isArrayChanged } from '../../helpers/equals';
@@ -25,16 +26,16 @@ class ACList extends React.Component {
    * @param {Object} nextProps New props
    * @returns {boolean} true if component should be updated
    */
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate (nextProps) {
     return !hasEqualProps(['selected'], nextProps, this.props)
-         || isArrayChanged(nextProps.list, this.props.list, this.listLength);
+      || isArrayChanged(nextProps.list, this.props.list, this.listLength);
   }
 
 
   /**
    * Handles component was updated
    */
-  componentDidUpdate() {
+  componentDidUpdate () {
     this.setHeight();
     this.scrollList();
   }
@@ -45,18 +46,17 @@ class ACList extends React.Component {
    * Then sets height of the list as 'itemsCount' x 'itemHeight'
    * Takes into consideration border and padding
    */
-  setHeight() {
+  setHeight () {
     if (!this.props.list.length || !this.refs.item0) {
       return;
     }
 
-    let node          = React.findDOMNode(this),
-        computedStyle = getComputedStyle(node),
-        itemHeight    = React.findDOMNode(this.refs.item0).offsetHeight,
-
-        height        = ACList.heightAddenums.reduce((height, prop) => {
-          return height + parseInt(computedStyle[prop], 10);
-        }, itemHeight * this.props.itemsCount);
+    const node          = ReactDom.findDOMNode(this);
+    const computedStyle = getComputedStyle(node);
+    const itemHeight    = ReactDom.findDOMNode(this.refs.item0).offsetHeight;
+    const height        = ACList.heightAddenums.reduce((heightParts, prop) => {
+      return heightParts + parseInt(computedStyle[prop], 10);
+    }, itemHeight * this.props.itemsCount);
 
     node.style.maxHeight = height + 'px';
   }
@@ -65,13 +65,13 @@ class ACList extends React.Component {
   /**
    * Scrolls list ot currently selected item number.
    */
-  scrollList() {
+  scrollList () {
     if (!this.props.list.length || this.props.selected < 0) {
       return;
     }
 
-    let selectedNode = React.findDOMNode(this.refs[`item${this.props.selected}`]),
-        node         = React.findDOMNode(this);
+    const selectedNode = ReactDom.findDOMNode(this.refs[`item${this.props.selected}`]);
+    const node         = ReactDom.findDOMNode(this);
 
     node.scrollTop = selectedNode.offsetTop - node.clientHeight / 2;
   }
@@ -82,13 +82,13 @@ class ACList extends React.Component {
    * Sets scrollTop position and calls onScrollBottom handler if bottom is reached
    * @param {WheelEvent} event Event
    */
-  handleScroll(event) {
+  handleScroll (event) {
     if (event.deltaY <= 0) {
       return;
     }
 
-    let list   = React.findDOMNode(this),
-        endTop = list.scrollHeight - list.clientHeight;
+    const list   = ReactDom.findDOMNode(this);
+    const endTop = list.scrollHeight - list.clientHeight;
 
     if (endTop > list.scrollTop) {
       return;
@@ -102,25 +102,25 @@ class ACList extends React.Component {
    * Renders component
    * @returns {XML}
    */
-  render() {
-    let listItemNodes = this.props.list.map((listItem, index) => {
-          return <ACListItem
-              key      = {index}
-              onClick  = {this.props.onItemClick.bind(null, listItem)}
-              ref      = {`item${index}`}
-              selected = {index === +this.props.selected}
-              text     = {listItem} />;
-        }),
-        className = classNames('dropdown-menu scrollable-menu', {
-          show: this.props.list.length
-        });
+  render () {
+    const listItemNodes = this.props.list.map((listItem, index) => {
+      return (<ACListItem
+        key      = {index}
+        onClick  = {this.props.onItemClick.bind(null, listItem)}
+        ref      = {`item${index}`}
+        selected = {index === +this.props.selected}
+        text     = {listItem} />);
+    });
+    const className = classNames('dropdown-menu scrollable-menu', {
+      show: this.props.list.length
+    });
 
     this.listLength = this.props.list.length;
-    return  <ul
-        className = {className}
-        onWheel   = {this.handleScroll.bind(this)}>
+    return  (<ul
+      className = {className}
+      onWheel   = {this.handleScroll.bind(this)}>
       {listItemNodes}
-    </ul>;
+    </ul>);
   }
 }
 

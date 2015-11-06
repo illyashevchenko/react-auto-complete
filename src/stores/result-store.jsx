@@ -6,7 +6,7 @@ import ResultActions from '../actions/result-actions';
 
 
 class ResultStore {
-  constructor() {
+  constructor () {
     this.result = '';
 
     this.bindListeners({
@@ -15,7 +15,7 @@ class ResultStore {
   }
 
 
-  handleSetResult(result) {
+  handleSetResult (result) {
     this.result = result;
   }
 }

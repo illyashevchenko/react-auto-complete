@@ -19,7 +19,7 @@ class ACListItem extends React.Component {
    * @param {Object} nextProps New props
    * @returns {boolean} true if component should be updated
    */
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate (nextProps) {
     return !hasEqualProps(['text', 'selected'], nextProps, this.props);
   }
 
@@ -28,16 +28,16 @@ class ACListItem extends React.Component {
    * Renders component
    * @returns {XML}
    */
-  render() {
-    let className = classNames({
+  render () {
+    const className = classNames({
       active: this.props.selected
     });
 
-    return <li
+    return (<li
         className = {className}
         onClick = {this.props.onClick} >
       <a>{this.props.text}</a>
-    </li>;
+    </li>);
   }
 }
 

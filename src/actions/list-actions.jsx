@@ -6,12 +6,12 @@ import listSource from '../sources/list-source';
 
 
 class ListActions {
-  update(data) {
+  update (data) {
     this.dispatch(data);
   }
 
 
-  fetch({ query, start, count }) {
+  fetch ({ query, start, count }) {
     this.dispatch();
 
     listSource.fetch(query, start, count)
@@ -20,17 +20,17 @@ class ListActions {
   }
 
 
-  error(data) {
+  error (data) {
     this.dispatch(data);
   }
 
 
-  serveTo(data) {
+  serveTo (data) {
     this.dispatch(data);
   }
 
 
-  setFilter(value) {
+  setFilter (value) {
     this.dispatch(value);
   }
 }

@@ -6,7 +6,7 @@ import ListActions from '../actions/list-actions';
 
 
 class ListStore {
-  constructor() {
+  constructor () {
     this._emptyList = [];
     this.loading  = false;
     this.list     = this._emptyList;
@@ -24,7 +24,7 @@ class ListStore {
   }
 
 
-  handleFetch() {
+  handleFetch () {
     /**
      * this flag can be set previously with reset loading flag,
      * but we still need prevent double update
@@ -36,28 +36,37 @@ class ListStore {
   }
 
 
-  handleUpdate(list) {
+  handleUpdate (list) {
     if (this.preventNearestUpdate) {
       this.preventNearestUpdate = null;
       return;
     }
 
-    list = list.map((item) =>  item.firstName);
-    list = this.list.concat(list);
+    let mappedList = list.map((item) =>  item.firstName);
+    mappedList = this.list.concat(mappedList);
 
     this.loading = false;
-    this.list    = list;
-    this.error   = !list.length;
+    this.list    = mappedList;
+    this.error   = !mappedList.length;
   }
 
 
-  handleError() {
+  handleError () {
     this.loading = false;
     this.error   = true;
   }
 
 
-  handleFilter(value) {
+  handleFilter (value) {
+    if (this.loading) {
+      /**
+       * if something is loaded and new filter selected (or item selected which is the same here)
+       * need to prevent next update and reset loading flag
+       */
+      this.loading = false;
+      this.preventNearestUpdate = true;
+    }
+
     this.list     = this._emptyList;
     this.error    = false;
     this.selected = -1;
@@ -65,7 +74,7 @@ class ListStore {
   }
 
 
-  handleServing(itemNumber) {
+  handleServing (itemNumber) {
     this.selected = itemNumber;
   }
 }

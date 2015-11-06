@@ -5,8 +5,8 @@ import React from 'react';
 
 
 class Result extends React.Component {
-  render() {
-    var result = this.props.result ? `Selected item first name is ${this.props.result}` : '';
+  render () {
+    const result = this.props.result ? `Selected item first name is ${this.props.result}` : '';
 
     return <span>{result}</span>;
   }

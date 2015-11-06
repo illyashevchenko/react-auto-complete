@@ -16,7 +16,7 @@ class ACInput extends React.Component {
    * @param {string} [props.placeholder = ''] Placeholder for input
    * @param {string} [props.value]
    */
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     this.state = {
@@ -34,7 +34,7 @@ class ACInput extends React.Component {
    * Process value from props to state if it differs from current (is set from outside)
    * @param {Object} props New props
    */
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps (props) {
     if (props.value !== this.props.value) {
       this.setState({
         value: props.value
@@ -49,7 +49,7 @@ class ACInput extends React.Component {
    * @param {Object} nextState New state
    * @returns {boolean} true if component should be updated
    */
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate (nextProps, nextState) {
     return !hasEqualProps(['value'], nextState, this.state);
   }
 
@@ -57,7 +57,7 @@ class ACInput extends React.Component {
   /**
    * Handles search. Calls onChange callback
    */
-  handleSearch() {
+  handleSearch () {
     this.props.onChange(this.state.value);
   }
 
@@ -66,7 +66,7 @@ class ACInput extends React.Component {
    * Handles onChange
    * @param {Event} event Event object
    */
-  handleChange(event) {
+  handleChange (event) {
     this.setState({
       value: event.target.value
     });
@@ -79,8 +79,8 @@ class ACInput extends React.Component {
    * Handles keydown. If 'enter' is pressed - forces searching without debounce
    * @param {Event} event Event object
    */
-  handleKeyDown(event) {
-    let keyCode = event.keyCode || event.which;
+  handleKeyDown (event) {
+    const keyCode = event.keyCode || event.which;
 
     if (keyCode === 13) {
       this.handleSearch();
@@ -92,16 +92,16 @@ class ACInput extends React.Component {
    * Renders component
    * @returns {XML}
    */
-  render() {
-    let { placeholder } = this.props;
+  render () {
+    const { placeholder } = this.props;
 
-    return <input
-        className   = {this.props.className}
-        onChange    = {this.handleChange.bind(this)}
-        onKeyDown   = {this.handleKeyDown.bind(this)}
-        placeholder = {placeholder}
-        type        = 'text'
-        value       = {this.state.value} />;
+    return (<input
+      className   = {this.props.className}
+      onChange    = {this.handleChange.bind(this)}
+      onKeyDown   = {this.handleKeyDown.bind(this)}
+      placeholder = {placeholder}
+      type        = 'text'
+      value       = {this.state.value} />);
   }
 }
 

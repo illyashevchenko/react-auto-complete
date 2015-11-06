@@ -1,10 +1,12 @@
 /**
  * Created by Illia_Shevchenko on 28.09.2015.
  */
+
 import React from 'react';
 import ACInput from './auto-complete-input';
 import ACInputButton from './auto-complete-input-button';
 import ACList from './auto-complete-list';
+
 /**
  * @typedef {Function} ListAction~query
  * @param {Object} params Query params
@@ -64,7 +66,7 @@ class AutoCompleteBox extends React.Component {
    * @param {string} [props.placeholder = 'Type something...'] Placeholder for input
    * @param {number} [props.selected = -1] Number of currently selected list item (used for keyboard serving purposes)
    */
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     /**
@@ -84,7 +86,7 @@ class AutoCompleteBox extends React.Component {
   /**
    * Calls 'fetch' action with parameters to fetch next 'itemsCount' elements of the list with filter value
    */
-  queryList() {
+  queryList () {
     this.props.actions.fetch({
       query: this.props.filter,
       start: this.props.list.length,
@@ -97,24 +99,24 @@ class AutoCompleteBox extends React.Component {
    * Handles keydown on input. Calls appropriate handlers depending on event.keyCode or event.which
    * @param {Event} event
    */
-  handleKeyDown(event) {
-    let keyCode = event.keyCode || event.which; //38 - up, 40 - down, 39 - right, 13 - enter
+  handleKeyDown (event) {
+    const keyCode = event.keyCode || event.which; // 38 - up, 40 - down, 39 - right, 13 - enter
 
-    switch (keyCode) {
-      case 13:
-        this.handleEnter();
-        break;
-      case 38:
-        this.handleListServe(-1);
-        event.preventDefault(); //prevent default <input> behaviour for up/down button presses
-        break;
-      case 40:
-        this.handleListServe(1);
-        event.preventDefault();
-        break;
-      case 39:
-        this.handleAutoComplete();
-        break;
+    switch (keyCode) { // eslint-disable-line default-case
+    case 13:
+      this.handleEnter();
+      break;
+    case 38:
+      this.handleListServe(-1);
+      event.preventDefault(); // prevent default <input> behaviour for up/down button presses
+      break;
+    case 40:
+      this.handleListServe(1);
+      event.preventDefault();
+      break;
+    case 39:
+      this.handleAutoComplete();
+      break;
     }
   }
 
@@ -125,19 +127,19 @@ class AutoCompleteBox extends React.Component {
    * Calls 'serveTo' action if the end of list was reached
    * @param {Number} step Step for list serving. 1 to jump one item down, -1 to jump one item update
    */
-  handleListServe(step) {
+  handleListServe (step) {
     if (!this.props.list.length) {
       return;
     }
 
-    let loadPosition = this.props.list.length - 2, //this.props.list.length - this.props.itemsCount / 2, //TODO: this formula may be changed
-        selected     = this.props.selected + step;
+    const loadPosition = this.props.list.length - 2; // this.props.list.length - this.props.itemsCount / 2, // TODO: this formula may be changed
+    let   selected     = this.props.selected + step;
 
 
     selected = Math.max(selected, -1);
     selected = Math.min(selected, this.props.list.length - 1);
 
-    if (selected > loadPosition) { //TODO: If we select item we should reset that process of fetching list
+    if (selected > loadPosition) { // TODO: If we select item we should reset that process of fetching list
       this.queryList();
     }
 
@@ -151,7 +153,7 @@ class AutoCompleteBox extends React.Component {
    * Calls 'setFilter' action
    * @param {String} value New filter value.
    */
-  handleFiltering(value) {
+  handleFiltering (value) {
     if (value === this.props.filter && this.props.list.length) {
       return;
     }
@@ -171,7 +173,7 @@ class AutoCompleteBox extends React.Component {
   /**
    * Handles auto complete - simulates item click on the first list item
    */
-  handleAutoComplete() {
+  handleAutoComplete () {
     if (this.props.list[0]) {
       this.handleItemClick(this.props.list[0]);
     }
@@ -185,8 +187,8 @@ class AutoCompleteBox extends React.Component {
    * If start filtering was accepted inside the ACInput it would clear this.props.list so item here would be undefined
    * And so everything will work properly
    */
-  handleEnter() {
-    let item = this.props.list[this.props.selected];
+  handleEnter () {
+    const item = this.props.list[this.props.selected];
 
     if (item) {
       this.handleItemClick(item);
@@ -199,7 +201,7 @@ class AutoCompleteBox extends React.Component {
    * Calls 'setFilter' action and 'set.result' action
    * @param {String} itemValue current clicked item
    */
-  handleItemClick(itemValue) {
+  handleItemClick (itemValue) {
     this.props.actions.setFilter(itemValue);
     this.props.result.set(itemValue);
   }
@@ -209,38 +211,38 @@ class AutoCompleteBox extends React.Component {
    * Renders component
    * @returns {XML}
    */
-  render() {
-    return <div
-        className = 'dropdown'
-        onKeyDown = {this.handleKeyDown.bind(this)}>
+  render () {
+    return (<div
+      className = 'dropdown'
+      onKeyDown = {this.handleKeyDown.bind(this)}>
       <div className = 'input-group'>
         <ACInput
-            className   = 'form-control'
-            debounce    = {this.props.debounce}
-            onChange    = {this.handleFiltering.bind(this)}
-            placeholder = {this.props.placeholder}
-            value       = {this.props.filter} />
+          className   = 'form-control'
+          debounce    = {this.props.debounce}
+          onChange    = {this.handleFiltering.bind(this)}
+          placeholder = {this.props.placeholder}
+          value       = {this.props.filter} />
         <ACInputButton
-            className = 'glyphicon loader'
-            show      = {this.props.loading} />
+          className = 'glyphicon loader'
+          show      = {this.props.loading} />
         <ACInputButton
-            className = 'glyphicon glyphicon-search'
-            onClick   = {this.handleFiltering.bind(this, this.props.filter)}
-            show      = {!this.props.loading} />
+          className = 'glyphicon glyphicon-search'
+          onClick   = {this.handleFiltering.bind(this, this.props.filter)}
+          show      = {!this.props.loading} />
         <ACInputButton
-            className = 'glyphicon glyphicon-remove'
-            onClick   = {this.handleFiltering.bind(this, '')} />
+          className = 'glyphicon glyphicon-remove'
+          onClick   = {this.handleFiltering.bind(this, '')} />
       </div>
       <ACList
-          itemsCount     = {this.props.itemsCount}
-          list           = {this.props.list}
-          onItemClick    = {this.handleItemClick.bind(this)}
-          onScrollBottom = {this.queryList.bind(this)}
-          selected       = {this.props.selected} />
+        itemsCount     = {this.props.itemsCount}
+        list           = {this.props.list}
+        onItemClick    = {this.handleItemClick.bind(this)}
+        onScrollBottom = {this.queryList.bind(this)}
+        selected       = {this.props.selected} />
       <ACList
-          itemsCount  = {1}
-          list        = {this.props.error ? this.errorList : this.emptyErrorList} />
-    </div>;
+        itemsCount  = {1}
+        list        = {this.props.error ? this.errorList : this.emptyErrorList} />
+    </div>);
   }
 }
 

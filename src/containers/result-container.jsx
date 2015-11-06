@@ -9,11 +9,11 @@ import ResultStore from '../stores/result-store';
 
 
 class Container extends React.Component {
-  render() {
-    return <AltContainer
+  render () {
+    return (<AltContainer
         store = {ResultStore}>
       <Result />
-    </AltContainer>;
+    </AltContainer>);
   }
 }
 

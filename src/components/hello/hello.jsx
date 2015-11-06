@@ -4,7 +4,7 @@
 import React from 'react';
 
 class HelloWorld extends React.Component {
-  render() {
+  render () {
     return <h1>Hello from {this.props.phrase}!</h1>;
   }
 }

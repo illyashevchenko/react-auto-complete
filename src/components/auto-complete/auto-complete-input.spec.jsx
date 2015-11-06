@@ -1,11 +1,11 @@
 /**
  * Created by Illia_Shevchenko on 08.10.2015.
  */
-import { expect, render, TestUtils, sinon } from '../../helpers/test-helper';
+import { expect, render/* , TestUtils, sinon*/ } from '../../utils/test-helper';
 import ACInput from './auto-complete-input';
 
 describe('ACInput', () => {
-  let defaultProps = {
+  const defaultProps = {
     className  : 'foo-bar',
     debounce   : 5,
     onChange   : () => {},
@@ -13,21 +13,20 @@ describe('ACInput', () => {
     value      : ''
   };
 
-  //it('should set onclick handler', () => {
-  //  let spy = sinon.spy(),
-  //      container = render(ACInput, {
-  //        onClick: spy
-  //      }, defaultProps)
-  //          .findWithClass('input-group-btn');
-  //
-  //  TestUtils.Simulate.click(container);
-  //  return expect(spy).to.have.been.calledOnce;
-  //});
+  /* it('should set onclick handler', () => {
+   let spy = sinon.spy(),
+   container = render(ACInput, {
+   onClick: spy
+   }, defaultProps)
+   .findWithClass('input-group-btn');
+   TestUtils.Simulate.click(container);
+   return expect(spy).to.have.been.calledOnce;
+   });*/
 
 
   describe('Creation', () => {
-    let input = render(ACInput, {}, defaultProps)
-        .findWithTag('input');
+    const input = render(ACInput, {}, defaultProps)
+      .findWithTag('input');
 
     it('should set  className for input element', () => {
       expect(input.className).to.equal('foo-bar');
@@ -41,11 +40,11 @@ describe('ACInput', () => {
 
 
   describe('should component update', function () {
-    let component = render(ACInput, {}, defaultProps);
+    const component = render(ACInput, {}, defaultProps);
 
 
     it('should allow to update component if value property was changed', () => {
-      let shouldUpdate = component.shouldComponentUpdate(null, {
+      const shouldUpdate = component.shouldComponentUpdate(null, {
         value: 'new'
       });
 
@@ -54,7 +53,7 @@ describe('ACInput', () => {
 
 
     it('should disallow to update component if value property was not changed', () => {
-      let shouldUpdate = component.shouldComponentUpdate(null, {
+      const shouldUpdate = component.shouldComponentUpdate(null, {
         value: ''
       });
 

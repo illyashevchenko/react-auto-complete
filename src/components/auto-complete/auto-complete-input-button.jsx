@@ -18,7 +18,7 @@ class ACInputButton extends React.Component {
    * @param {Object} nextProps New props
    * @returns {boolean} true if component should be updated
    */
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate (nextProps) {
     return !hasEqualProps(['show', 'className'], nextProps, this.props);
   }
 
@@ -27,22 +27,22 @@ class ACInputButton extends React.Component {
    * Renders component
    * @returns {XML}
    */
-  render() {
-    let { onClick = () => {}, className, show } = this.props;
+  render () {
+    const { onClick = () => {}, className, show } = this.props;
 
-    let containerClassName = classNames('input-group-btn', { //use the second let, because IDE resists to catch syntax when one using one let
+    const containerClassName = classNames('input-group-btn', { // use the second let, because IDE resists to catch syntax when one using one let
       hide: !show
     });
 
-    return <span
-        className = {containerClassName}
-        onClick   = {onClick}>
+    return (<span
+      className = {containerClassName}
+      onClick   = {onClick}>
           <button
-              className = 'btn btn-default'
-              type      = 'button'>
+            className = 'btn btn-default'
+            type      = 'button'>
             <span className = {className}></span>
           </button>
-        </span>;
+        </span>);
   }
 }
 
